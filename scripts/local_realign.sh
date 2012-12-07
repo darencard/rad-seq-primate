@@ -22,6 +22,7 @@ java -Xmx4g -Djava.io.tmpdir=${TMP_DIR} \
 	-jar ${GATK}/GenomeAnalysisTK.jar \
 	-I results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam \
 	-R ${GENOME_FA} \
+	--filter_mismatching_base_and_quals \
 	-T IndelRealigner \
 	-targetIntervals results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam.list \
 	-o results/${IND_ID}.bwa.${GENOME_CODE}.passed.realn.bam
