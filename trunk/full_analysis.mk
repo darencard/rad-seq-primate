@@ -64,7 +64,7 @@ SHELL_EXPORT := $(foreach v,$(MAKE_ENV),$(v)='$($(v))')
 # -------------------------------------------------------------------------------------- #
 
 # The .fai output of samtools depends on the genome, BWA, samtools, & index_genome.sh
-${GENOME_FA}i : ${GENOME_FA} ${BWA}/* ${SAMTOOLS}/* #scripts/index_genome.sh
+${GENOME_FA}i : ${GENOME_FA} #${BWA}/* ${SAMTOOLS}/* #scripts/index_genome.sh
 	@echo "# === Indexing genome =============================================== #";
 	${SHELL_EXPORT} ./scripts/index_genome.sh ${GENOME_FA};
 	@sleep 2
@@ -215,7 +215,7 @@ results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.RG.bam : results/${IND
 # -------------------------------------------------------------------------------------- #
 
 # Filtered BAM depends on output BAM from add_read_groups.sh, BAMtools, and scripts/filter_mapped_reads_quality.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.RG.bam ${BEDTOOLS}/* # scripts/filter_mapped_reads_quality.sh
+results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.RG.bam ${BEDTOOLS}/* # scripts/filter_mapped_reads_quality.sh
 	@echo "# === Filtering low quality reads mapped to genome ====================== #";
 	${SHELL_EXPORT} ./scripts/filter_mapped_reads_quality.sh ${GENOME_NAME};
 	${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam;
