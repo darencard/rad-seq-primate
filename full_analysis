@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Exome pipeline is called as a make file. 
+
+make -s -f full_analysis.mk all
