@@ -2,7 +2,7 @@
 # --- Configuration makefile of user-editable variables 
 # -------------------------------------------------------------------------------------- #
 
-# All paths must be absolute or relative to the xspecies-exome top directory
+# All paths must be absolute or relative to the RADprimates top directory
 
 # -------------------------------------------------------------------------------------- #
 # --- Paths to input files
@@ -45,5 +45,5 @@ PSMC=/home/cmb433/exome_macaque/bin/psmc
 # -------------------------------------------------------------------------------------- #
 
 BWA_ALN_PARAM=-t 8
-SNP_MIN_COV=5
+SNP_MIN_COV=3
 SNP_MAX_COV=100

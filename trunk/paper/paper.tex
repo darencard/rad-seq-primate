@@ -25,11 +25,13 @@
 	\item Still expensive
 	\item Many genomes, but still tough doing genomics on non-model organisms
 	\item What is RADseq?
+	\item Previous RADseq studies
+	\item Why would it be good for primates
 	\item PRESENT STUDY
 	\begin{itemize}
 		\item We did RADseq on 6 Cercopithecoids
 		\item Assessed how well it worked
-		\item Did simple phylogeny?
+		\item Show it has promise for primates
 	\end{itemize}
 \end{itemize}
 
@@ -39,7 +41,7 @@
 \begin{itemize}
 	\item 6 animals, table with sources and other info
 	\item Etter et al. 2011, though with modifications
-	\item How we picked enzyme, PspXI
+	\item How we picked enzyme, PspXI. UCSC oligoMatch
 	\item Adapter sequences. Barcodes with at least 3 mismatches. PE adapter
 	\item What did it look like on BioA? Size? Concentration?
 	\item Sequenced on Illumina MiSeq. 150PE
@@ -51,7 +53,7 @@
 \paragraph{Analysis Pipeline - Mapping to Reference Genomes}
 \begin{itemize}
 	\item Demultiplex. Must have barcode and restriction site intact.
-	\item Analyze reads with FastQC
+	\item Analyze reads with FastQC (No need to say this)
 	\begin{itemize}
 		\item Total sequence bp
 		\item Maximum possible sequence depth
@@ -61,15 +63,15 @@
 	\begin{itemize}
 		\item default parameters
 	\end{itemize}
-	\item Combine paired-end reads with BWA sampe
-	\item Convert to BAM, sort and index with samtools
+	\item Combine paired-end reads with BWA sampe (No need to say this)
+	\item Convert to BAM, sort and index with samtools (No need to say this)
 	\item Analyze mapped reads with samtools utilities flagstat and idxstats and bamtools utility 
 	\item Post-alignment filtering steps
 	\begin{itemize}
 		\item Fix mate pair info with Picard
 		\item Filter for mapped and paired.
 		\item Remove dups with Picard
-		\item Add read group info with Picard
+		\item Add read group info with Picard (No need to say this)
 		\item Remove reads with low mapping quality with bamtools
 	\end{itemize}
 \end{itemize}
@@ -77,9 +79,9 @@
 \paragraph{Analysis Pipeline - Variant Calling}
 \begin{itemize}
 	\item Local realignment with GATK
-	\item Fix paired end data with Picard
-	\item Call SNPs with samtools
-	\item Summarize SNP stats with vcf-stats
+	\item Fix paired end data with Picard (No need to say this)
+	\item Call SNPs with samtools. Min coverage = 3, max = 100
+	\item Summarize SNP stats with vcf-stats (No need to say this)
 	%\item Call consensus sequence with samtools
 \end{itemize}
 
@@ -105,12 +107,12 @@
 	\end{itemize}
 \end{itemize}
 
-\paragraph{Analysis Pipeline - Inferring Phylogeny}
-\begin{itemize}
-	\item Using Stacks? 
-	\item Using method like cichlid people?
-	\item Using method like Rubin et al %http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0033394
-\end{itemize}
+%\paragraph{Analysis Pipeline - Inferring Phylogeny}
+%\begin{itemize}
+%	\item Using Stacks? 
+%	\item Using method like cichlid people?
+%	\item Using method like Rubin et al %http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0033394
+%\end{itemize}
 
 \section{Results}
 \begin{itemize}
@@ -124,11 +126,16 @@
 	\end{itemize}
 	\item SNP Venn diagram?
 	\item Table of overlapping region, orthologous SNP counts
-	\item Phylogenetic tree
+	%\item Phylogenetic tree
 \end{itemize}
 
-\section{Conclusions}
-Conclusions
+\section{Discussion}
+\begin{itemize}
+	\item RADseq is viable tool for researcher interested in primate phylogenetics, pop. gen.
+	\item Enzyme choice allows control over coverage, number of individuals, number of loci.
+	\item Potential problems with RADseq method
+	\item Promise for primatology
+\end{itemize}
 
 \section{Acknowledgements}
 Acknowledgements
