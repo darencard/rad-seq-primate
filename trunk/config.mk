@@ -9,7 +9,7 @@
 # -------------------------------------------------------------------------------------- #
 
 # Individual ID (used to name files)
-IND_ID=Mmulatta1
+IND_ID=Tgelada871162
 
 # Paths to input reads files
 # Must be in FASTQ format
