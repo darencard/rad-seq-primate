@@ -1,0 +1,137 @@
+\title{RADseq Works in Primates, Dammit.}
+\author{
+        Christina M. Bergey
+			\and
+			Andrew S. Burrell
+			\and
+			Luca S.J. Pozzi
+			\and
+			Todd, I suppose
+	}
+\date{\today}
+
+\documentclass[12pt]{article}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\ldots Blah, blah, blah, RADseq, blah, blah, Cercopithecoidea. \ldots
+\end{abstract}
+
+\section{Introduction}
+\begin{itemize}
+	\item Next-gen sequencing revolution promises gains in primatology
+	\item Still expensive
+	\item Many genomes, but still tough doing genomics on non-model organisms
+	\item What is RADseq?
+	\item PRESENT STUDY
+	\begin{itemize}
+		\item We did RADseq on 6 Cercopithecoids
+		\item Assessed how well it worked
+		\item Did simple phylogeny?
+	\end{itemize}
+\end{itemize}
+
+\section{Methods}
+
+\paragraph{Library Preparation and Sequencing}
+\begin{itemize}
+	\item 6 animals, table with sources and other info
+	\item Etter et al. 2011, though with modifications
+	\item How we picked enzyme, PspXI
+	\item Adapter sequences. Barcodes with at least 3 mismatches. PE adapter
+	\item What did it look like on BioA? Size? Concentration?
+	\item Sequenced on Illumina MiSeq. 150PE
+	\item NYU Langone Medical Center's Genome Technology Center (name right?)
+	\item How much actually loaded?
+	\item 30\% spike in with PhiX control DNA to control for low diversity library
+\end{itemize}
+
+\paragraph{Analysis Pipeline - Mapping to Reference Genomes}
+\begin{itemize}
+	\item Demultiplex. Must have barcode and restriction site intact.
+	\item Analyze reads with FastQC
+	\begin{itemize}
+		\item Total sequence bp
+		\item Maximum possible sequence depth
+		\item Other stats that FastQC gives you
+	\end{itemize}
+	\item Aligned to rhesus genome using BWA aln
+	\begin{itemize}
+		\item default parameters
+	\end{itemize}
+	\item Combine paired-end reads with BWA sampe
+	\item Convert to BAM, sort and index with samtools
+	\item Analyze mapped reads with samtools utilities flagstat and idxstats and bamtools utility 
+	\item Post-alignment filtering steps
+	\begin{itemize}
+		\item Fix mate pair info with Picard
+		\item Filter for mapped and paired.
+		\item Remove dups with Picard
+		\item Add read group info with Picard
+		\item Remove reads with low mapping quality with bamtools
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Analysis Pipeline - Variant Calling}
+\begin{itemize}
+	\item Local realignment with GATK
+	\item Fix paired end data with Picard
+	\item Call SNPs with samtools
+	\item Summarize SNP stats with vcf-stats
+	%\item Call consensus sequence with samtools
+\end{itemize}
+
+\paragraph{Analysis Pipeline - Analysis of Degree of Overlap}
+\begin{itemize}
+	\item Calculate coverage of restriction site-associated regions
+	\begin{itemize}
+		\item Info on targeted intervals
+		\begin{itemize}
+			\item Total number possible targets in rhesus genome (compare to human too?)
+			\item Total possible target BP
+		\end{itemize}
+		\item How many targets did we hit?
+		\begin{itemize}
+			\item BEDtools multiBamCoverage for this job
+			\item Number and percentage of targets with coverage $\ge 1$
+			\item Number and percentage of targets with coverage $\ge N$
+		\end{itemize}
+	\end{itemize}
+	\item Count orthologous SNPs shared between individuals
+	\begin{itemize}
+		\item VCFtools vcf-compare for this job
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Analysis Pipeline - Inferring Phylogeny}
+\begin{itemize}
+	\item Using Stacks? 
+	\item Using method like cichlid people?
+	\item Using method like Rubin et al %http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0033394
+\end{itemize}
+
+\section{Results}
+\begin{itemize}
+	\item Table: 
+	\begin{itemize}
+		\item Number of reads per animal
+		\item Number that passed filtration
+		\item Number of loci hit
+		\item Number of loci hit with coverage $\ge N$
+		\item Number of SNPs
+	\end{itemize}
+	\item SNP Venn diagram?
+	\item Table of overlapping region, orthologous SNP counts
+	\item Phylogenetic tree
+\end{itemize}
+
+\section{Conclusions}
+Conclusions
+
+\section{Acknowledgements}
+Acknowledgements
+
+
+\end{document}
