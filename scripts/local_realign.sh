@@ -30,5 +30,8 @@ java -Xmx4g -Djava.io.tmpdir=${TMP_DIR} \
 # Delete temp folder
 rm -r $TMP_DIR
 
+# Copy index file, since we expect it later with a slightly different name
+cp results/${IND_ID}.bwa.${GENOME_CODE}.passed.realn.bai results/${IND_ID}.bwa.${GENOME_CODE}.passed.realn.bam.bai
+
 exit;
 
