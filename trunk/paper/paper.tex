@@ -12,6 +12,8 @@
 
 \documentclass[12pt]{article}
 
+\usepackage{color}
+
 \begin{document}
 \maketitle
 
@@ -38,17 +40,20 @@
 \section{Methods}
 
 \paragraph{Library Preparation and Sequencing}
-\begin{itemize}
-	\item 6 animals, table with sources and other info
-	\item Etter et al. 2011, though with modifications
-	\item How we picked enzyme, PspXI. UCSC oligoMatch
-	\item Adapter sequences. Barcodes with at least 3 mismatches. PE adapter
-	\item What did it look like on BioA? Size? Concentration?
-	\item Sequenced on Illumina MiSeq. 150PE
-	\item NYU Langone Medical Center's Genome Technology Center (name right?)
-	\item How much actually loaded?
-	\item 30\% spike in with PhiX control DNA to control for low diversity library
-\end{itemize}
+
+	Genomic DNA from 6 animals was digested with \emph{PspXI} (New England Biolabs) and used to create a multiplexed RAD tag library. Our library preparation method followed that of Etter et al, 2011 with the following modifications: the P1 adapter top\textcolor{red}{(?)} oligonucleotide was modified to have an overhang corresponding to the cut site of \emph{PspXI}, and a longer P2 adapter suitable for paired end sequencing was used (P2\_top: 5'-\textcolor{red}{SEQUENCEHERE}-3'; P2\_bottom: 5'-\textcolor{red}{SEQUENCEHERE}-3'). Individual-specific barcodes contained in the P1 adapter differed by at least \textcolor{red}{three} nucleotides. We chose \emph{PspXI} based on the results of \emph{in silico} digestion of the human, rhesus macaque, and baboon reference genomes using custom Perl scripts (\textcolor{red}{refs}). We sequenced the prepared library as one 150-cycle paired-end run of an Illumina MiSeq at the NYU Langone Medical Center's Genome Technology Center using a spike-in of 30\% PhiX DNA to control for low diversity in the library at the barcode and restriction sites. Sequences are available to download from the NCBI Short Read Archive (accession number \textcolor{red}{SRAXXXXXX.X}).
+	
+%\begin{itemize}
+	%\item 6 animals, table with sources and other info
+	%\item Etter et al. 2011, though with modifications
+	%\item How we picked enzyme, PspXI. UCSC oligoMatch
+	%\item Adapter sequences. Barcodes with at least 3 mismatches. PE adapter
+	%\item What did it look like on BioA? Size? Concentration?
+	%\item Sequenced on Illumina MiSeq. 150PE
+	%\item NYU Langone Medical Center's Genome Technology Center (name right?)
+	%\item How much actually loaded?
+	%\item 30\% spike in with PhiX control DNA to control for low diversity library
+%\end{itemize}
 
 \paragraph{Analysis Pipeline - Mapping to Reference Genomes}
 \begin{itemize}
