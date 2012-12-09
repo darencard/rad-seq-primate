@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 DEC 2012 19:21
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 DEC 2012 21:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -85,28 +85,39 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
  [1
 
-{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 49.
+(Font)              <10.95> on input line 75.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 49.
+(Font)              <8> on input line 75.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 49.
- [2]
-Overfull \hbox (3.81674pt too wide) in paragraph at lines 69--70
-[]\OT1/cmr/m/n/12 To an-a-lyze the de-gree of over-lap be-tween mul-ti-plexed i
-n-di-vid-ual's datasets,
+(Font)              <6> on input line 75.
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
+[]\OT1/cmr/m/it/10.95 Cercocebus
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--83
+[]\OT1/cmr/m/it/10.95 Theropithecus
+ []
+
+
+Overfull \hbox (68.69055pt too wide) in paragraph at lines 75--86
+ [] 
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 91.
 [3] [4] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
- 786 strings out of 493747
- 9900 string characters out of 3143546
- 61819 words of memory out of 3000000
- 4133 multiletter control sequences out of 15000+200000
- 9456 words of font info for 33 fonts, out of 3000000 for 9000
+ 790 strings out of 493747
+ 9954 string characters out of 3143546
+ 64819 words of memory out of 3000000
+ 4136 multiletter control sequences out of 15000+200000
+ 10418 words of font info for 36 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 22i,8n,19p,1240b,271s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 22i,11n,19p,1312b,339s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmbx10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmbx12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/ams
@@ -115,11 +126,12 @@ onts/cm/cmr10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmr12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmr17.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmti12.pfb>
-Output written on paper.pdf (4 pages, 103330 bytes).
+/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmti12.pfb>
+Output written on paper.pdf (4 pages, 118853 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
- 34 compressed objects within 1 object stream
+ 53 PDF objects out of 1000 (max. 8388607)
+ 37 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
