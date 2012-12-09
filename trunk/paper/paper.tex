@@ -43,9 +43,26 @@
 
 	Genomic DNA from 6 animals was digested with \emph{PspXI} (New England Biolabs) and used to create a multiplexed RAD tag library. Our library preparation method followed that of Etter et al, 2011 with the following modifications: the P1 adapter top\textcolor{red}{(?)} oligonucleotide was modified to have an overhang corresponding to the cut site of \emph{PspXI}, and a longer P2 adapter suitable for paired end sequencing was used (P2\_top: 5'-\textcolor{red}{SEQUENCEHERE}-3'; P2\_bottom: 5'-\textcolor{red}{SEQUENCEHERE}-3'). Individual-specific barcodes contained in the P1 adapter differed by at least \textcolor{red}{three} nucleotides. We chose \emph{PspXI} based on the results of \emph{in silico} digestion of the human, rhesus macaque, and baboon reference genomes using custom Perl scripts (\textcolor{red}{refs}). We sequenced the prepared library as one 150-cycle paired-end run of an Illumina MiSeq at the NYU Langone Medical Center's Genome Technology Center using a spike-in of 30\% PhiX DNA to control for low diversity in the library at the barcode and restriction sites. Sequences are available to download from the NCBI Short Read Archive (accession number \textcolor{red}{SRAXXXXXX.X}).
 
+\begin{table}[h]
+\caption{Samples}
+\begin{center}
+  \begin{tabular}{ l | l | l }
+    \hline
+    Taxon & Source & Geographic Locality \\ \hline\hline
+    \textcolor{red}{Langur?} & NYU Collection & Unknown \\ \hline
+    \emph{Allenopithecus nigroviridis} & NYU Collection & Unknown \\ \hline
+    \emph{Macaca mulatta} & NYU Collection & Unknown \\ \hline
+    \emph{Cercocebus torquatus atys} & NYU Collection & Unknown \\ \hline
+    \emph{Papio anubis\textcolor{red}{?}} & NYU Collection & Unknown \\ \hline
+    \emph{Theropithecus gelada} & NYU Collection & Unknown \\ 
+    \hline
+  \end{tabular}
+\end{center}
+\end{table}
+
 \paragraph{Sequence Analysis}
 
-	Sequence reads were demultiplexed, or separated by barcode, and reads without an expected barcode or an intact restriction enzyme cut site were excluded from the analysis. Reads were then aligned to the rhesus macaque reference genome (v.1.0, Mmul_051212/rheMac2, \textcolor{red}{ref}) using BWA with default parameters. Reads that were unmapped, unpaired, duplicates, or that had low mapping quality were removed after alignment using Picard (\textcolor{red}{ref}) and BamTools (\textcolor{red}{ref}). 
+	Sequence reads were demultiplexed, or separated by barcode, and reads without an expected barcode or an intact restriction enzyme cut site were excluded from the analysis. Reads were then aligned to the rhesus macaque reference genome (v.1.0, Mmul\_051212/rheMac2, \textcolor{red}{ref}) using BWA with default parameters. Reads that were unmapped, unpaired, duplicates, or that had low mapping quality were removed after alignment using Picard (\textcolor{red}{ref}) and BamTools (\textcolor{red}{ref}). 
 
 	After performing local realignment around indels with GATK (\textcolor{red}{ref}), SNPs and short indels were identified using SAMtools mpileup and BCFtools (\textcolor{red}{ref}). A minimum coverage of 3 reads and a maximum of 100 was required to call a SNP or an indel at a given location.
 	
