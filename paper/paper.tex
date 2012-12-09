@@ -6,13 +6,14 @@
 			\and
 			Luca S.J. Pozzi
 			\and
-			Todd, I suppose
+			Todd R. Disotell
 	}
 \date{\today}
 
 \documentclass[12pt]{article}
 
 \usepackage{color}
+\usepackage{graphics}
 
 \begin{document}
 \maketitle
@@ -66,8 +67,6 @@
 
 6.1 million sequencing reads with an intact barcode and restriction enzyme cut site could be assigned confidently to one of the six Old World monkeys in the present study. Roughly 2.0 million of those reads were successfully mapped to the rhesus macaque genome and passed all quality control filtration steps. Relative to the reference genome, our study identified 531,175 SNPs and 24,260 small indels among all samples. Information for each individual is summarized in Table 1. 
 
-In the rhesus macaque genome, we found 108,727 possible cut sites for \emph{PspXI}.
-
 \begin{table}[h]
 \caption{Individual Sample Information}
 \begin{center}
@@ -75,29 +74,24 @@ In the rhesus macaque genome, we found 108,727 possible cut sites for \emph{PspX
 	\begin{tabular}{ p{3cm} || l || p{1.75cm} | p{1.75cm} || p{1.75cm} | p{1.75cm} | l }
 		\hline
 		Taxon & Source & \# Reads & \# Filtered Reads & \# Loci $\ge 1$ Read & \# Loci $\ge 3$ Reads & \# SNPs \\ \hline\hline
-		\textcolor{red}{Langur?} & \textcolor{red}{Unknown} & 1,367,050 & 306,248 & & & 363,501 \\ \hline
-		\emph{Allenopithecus nigroviridis} & \textcolor{red}{Unknown} & 1,325,558 & 447,279 & & & 356,750 \\ \hline
-		\emph{Macaca mulatta} & \textcolor{red}{Unknown} & 481,376 & 234,659 & & & 279,350 \\ \hline
-		\emph{Cercocebus torquatus atys} & \textcolor{red}{Unknown} & 297,290 & 124,700 & & & 319,766 \\ \hline
-		\emph{Papio anubis\textcolor{red}{?}} & \textcolor{red}{Unknown} & 743,556 & 313,676 & & & 316,118 \\ \hline
-		\emph{Theropithecus gelada} & \textcolor{red}{Unknown} & 1,911,030 & 603,024 & & & 366,097 \\
+		\textcolor{red}{Langur?} & \textcolor{red}{Unknown} & 1,367,050 & 306,248 & 47,516 & 24,052 & 363,501 \\ \hline
+		\emph{Allenopithecus nigroviridis} & \textcolor{red}{Unknown} & 1,325,558 & 447,279 & 62,824 & 40,244 & 356,750 \\ \hline
+		\emph{Macaca mulatta} & \textcolor{red}{Unknown} & 481,376 & 234,659 & 77,798 & 32,302 & 279,350 \\ \hline
+		\emph{Cercocebus torquatus atys} & \textcolor{red}{Unknown} & 297,290 & 124,700 & 48,440 & 13,104 & 319,766 \\ \hline
+		\emph{Papio anubis\textcolor{red}{?}} & \textcolor{red}{Unknown} & 743,556 & 313,676 & 74,582 & 39,062 & 316,118 \\ \hline
+		\emph{Theropithecus gelada} & \textcolor{red}{Unknown} & 1,911,030 & 603,024 & 68,440 & 50,656 & 366,097 \\
 		\hline
 	\end{tabular}
 \end{center}
 \end{table}
 
+In the rhesus macaque genome, we found 54,364 possible cut sites for \emph{PspXI} and 108,728 possible sequencing sites (two per cut site, one upstream and one downstream). Of those, 101,138 sites (93.02\%) were covered by at least one read in at least one individual, and for 13,456 sites (12.38\%), all six individuals had at least one read (Figure 1). When we restrict the analysis to sites with at least three reads, 80,448 sites (73.99\%) were covered in at least one individual and 1,354 sites (1.25\%) had all six individuals present.
+
+\includegraphics{figs/seq_site_coverage_by_ind}
+
 \begin{itemize}
-	\item Number of loci hit
-	\item Number of loci hit with coverage $\ge N$
 	\item SNP info from merged analysis
 	\item SNP Venn diagram?
-	\item Calculate coverage of restriction site-associated regions
-	\item Total number possible targets in rhesus genome (compare to human too?)
-	\item Total possible target BP
-	\item How many targets did we hit?
-	\item BEDtools multiBamCoverage for this job
-	\item Number and percentage of targets with coverage $\ge 1$
-	\item Number and percentage of targets with coverage $\ge N$
 	\item Count orthologous SNPs shared between individuals
 	\item VCFtools vcf-compare for this job
 \end{itemize}
