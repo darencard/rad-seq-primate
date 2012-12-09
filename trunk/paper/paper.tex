@@ -42,53 +42,14 @@
 \paragraph{Library Preparation and Sequencing}
 
 	Genomic DNA from 6 animals was digested with \emph{PspXI} (New England Biolabs) and used to create a multiplexed RAD tag library. Our library preparation method followed that of Etter et al, 2011 with the following modifications: the P1 adapter top\textcolor{red}{(?)} oligonucleotide was modified to have an overhang corresponding to the cut site of \emph{PspXI}, and a longer P2 adapter suitable for paired end sequencing was used (P2\_top: 5'-\textcolor{red}{SEQUENCEHERE}-3'; P2\_bottom: 5'-\textcolor{red}{SEQUENCEHERE}-3'). Individual-specific barcodes contained in the P1 adapter differed by at least \textcolor{red}{three} nucleotides. We chose \emph{PspXI} based on the results of \emph{in silico} digestion of the human, rhesus macaque, and baboon reference genomes using custom Perl scripts (\textcolor{red}{refs}). We sequenced the prepared library as one 150-cycle paired-end run of an Illumina MiSeq at the NYU Langone Medical Center's Genome Technology Center using a spike-in of 30\% PhiX DNA to control for low diversity in the library at the barcode and restriction sites. Sequences are available to download from the NCBI Short Read Archive (accession number \textcolor{red}{SRAXXXXXX.X}).
+
+\paragraph{Sequence Analysis}
+
+	Sequence reads were demultiplexed, or separated by barcode, and reads without an expected barcode or an intact restriction enzyme cut site were excluded from the analysis. Reads were then aligned to the rhesus macaque reference genome (v.1.0, Mmul_051212/rheMac2, \textcolor{red}{ref}) using BWA with default parameters. Reads that were unmapped, unpaired, duplicates, or that had low mapping quality were removed after alignment using Picard (\textcolor{red}{ref}) and BamTools (\textcolor{red}{ref}). 
+
+	After performing local realignment around indels with GATK (\textcolor{red}{ref}), SNPs and short indels were identified using SAMtools mpileup and BCFtools (\textcolor{red}{ref}). A minimum coverage of 3 reads and a maximum of 100 was required to call a SNP or an indel at a given location.
 	
-%\begin{itemize}
-	%\item 6 animals, table with sources and other info
-	%\item Etter et al. 2011, though with modifications
-	%\item How we picked enzyme, PspXI. UCSC oligoMatch
-	%\item Adapter sequences. Barcodes with at least 3 mismatches. PE adapter
-	%\item What did it look like on BioA? Size? Concentration?
-	%\item Sequenced on Illumina MiSeq. 150PE
-	%\item NYU Langone Medical Center's Genome Technology Center (name right?)
-	%\item How much actually loaded?
-	%\item 30\% spike in with PhiX control DNA to control for low diversity library
-%\end{itemize}
-
-\paragraph{Analysis Pipeline - Mapping to Reference Genomes}
-\begin{itemize}
-	\item Demultiplex. Must have barcode and restriction site intact.
-	\item Analyze reads with FastQC (No need to say this)
-	\begin{itemize}
-		\item Total sequence bp
-		\item Maximum possible sequence depth
-		\item Other stats that FastQC gives you
-	\end{itemize}
-	\item Aligned to rhesus genome using BWA aln
-	\begin{itemize}
-		\item default parameters
-	\end{itemize}
-	\item Combine paired-end reads with BWA sampe (No need to say this)
-	\item Convert to BAM, sort and index with samtools (No need to say this)
-	\item Analyze mapped reads with samtools utilities flagstat and idxstats and bamtools utility 
-	\item Post-alignment filtering steps
-	\begin{itemize}
-		\item Fix mate pair info with Picard
-		\item Filter for mapped and paired.
-		\item Remove dups with Picard
-		\item Add read group info with Picard (No need to say this)
-		\item Remove reads with low mapping quality with bamtools
-	\end{itemize}
-\end{itemize}
-
-\paragraph{Analysis Pipeline - Variant Calling}
-\begin{itemize}
-	\item Local realignment with GATK
-	\item Fix paired end data with Picard (No need to say this)
-	\item Call SNPs with samtools. Min coverage = 3, max = 100
-	\item Summarize SNP stats with vcf-stats (No need to say this)
-	%\item Call consensus sequence with samtools
-\end{itemize}
+	To analyze the degree of overlap between multiplexed individual's datasets, we...
 
 \paragraph{Analysis Pipeline - Analysis of Degree of Overlap}
 \begin{itemize}
@@ -121,14 +82,23 @@
 
 \section{Results}
 \begin{itemize}
+	\item Info from analyzing reads with FastQC
+	\begin{itemize}
+		\item Number of reads (per ind. too see table)
+		\item Total sequence bp (per ind. too see table)
+		\item Maximum possible sequence depth (Cut?)
+		\item Other stats that FastQC gives you?
+	\end{itemize}
 	\item Table: 
 	\begin{itemize}
 		\item Number of reads per animal
+		\item Total sequenced bp per animal?
 		\item Number that passed filtration
 		\item Number of loci hit
 		\item Number of loci hit with coverage $\ge N$
 		\item Number of SNPs
 	\end{itemize}
+	\item SNP info from merged analysis
 	\item SNP Venn diagram?
 	\item Table of overlapping region, orthologous SNP counts
 	%\item Phylogenetic tree
