@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 DEC 2012 22:58
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  10 DEC 2012 14:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -148,49 +148,54 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 74.
+(Font)              <10.95> on input line 75.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 74.
+(Font)              <8> on input line 75.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 74.
+(Font)              <6> on input line 75.
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--80
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
+[]\OT1/cmr/m/it/10.95 Semnopithecus
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
 []\OT1/cmr/m/it/10.95 Cercocebus
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
+Underfull \hbox (badness 10000) in paragraph at lines 83--83
 []\OT1/cmr/m/it/10.95 Theropithecus
  []
 
 
-Overfull \hbox (68.69055pt too wide) in paragraph at lines 74--85
+Overfull \hbox (68.69055pt too wide) in paragraph at lines 75--86
  [] 
  []
 
-<figs/seq_site_coverage_by_ind.pdf, id=16, 289.08pt x 289.08pt>
+[3] <figs/seq_site_coverage_by_ind.pdf, id=20, 289.08pt x 289.08pt>
 File: figs/seq_site_coverage_by_ind.pdf Graphic file (type pdf)
 
-<use figs/seq_site_coverage_by_ind.pdf> [3] [4 <./figs/seq_site_coverage_by_ind
-.pdf>] [5] (./paper.aux) ) 
+<use figs/seq_site_coverage_by_ind.pdf> [4 <./figs/seq_site_coverage_by_ind.pdf
+>] [5] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
  1312 strings out of 493747
  18759 string characters out of 3143546
- 76977 words of memory out of 3000000
+ 76972 words of memory out of 3000000
  4611 multiletter control sequences out of 15000+200000
  10060 words of font info for 35 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  37i,11n,23p,1312b,341s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/local/texlive/2010/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr17.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmti12.pfb>
-Output written on paper.pdf (5 pages, 116233 bytes).
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr17.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmti12.pfb>
+Output written on paper.pdf (5 pages, 118577 bytes).
 PDF statistics:
  58 PDF objects out of 1000 (max. 8388607)
  40 compressed objects within 1 object stream
