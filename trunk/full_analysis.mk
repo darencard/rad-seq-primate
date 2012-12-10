@@ -25,7 +25,7 @@ samse : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam
 sam2bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam
 sort_and_index_bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
 merge_bam : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
-get_alignment_stats : reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.txt
+get_alignment_stats : reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt
 # --- post_alignment_filtering_steps
 fix_mate_pairs : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.txt
 filter_unmapped : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt
@@ -47,7 +47,11 @@ alignment_steps : align sampe samse sam2bam sort_and_index_bam merge_bam get_ali
 post_alignment_filtering_steps : fix_mate_pairs filter_unmapped remove_dups add_read_groups filter_bad_qual
 snp_calling_steps : local_realign_targets local_realign call_snps filter_snps get_snp_stats #call_consensus
 
-all : preliminary_steps pre_aln_analysis_steps alignment_steps post_alignment_filtering_steps snp_calling_steps 
+# Steps for individuals
+indiv : preliminary_steps pre_aln_analysis_steps alignment_steps post_alignment_filtering_steps snp_calling_steps 
+
+# Steps for group
+# compare : 
 
 # Hack to be able to export Make variables to child scripts
 # Don't export variables from make that begin with non-alphanumeric character
@@ -328,3 +332,26 @@ results/${IND_ID}.bwa.${GENOME_NAME}.consensus.fq.gz : results/${IND_ID}.bwa.${G
 	@echo "# === Calling consensus sequence ===================== #";
 	${SHELL_EXPORT} ./scripts/call_consensus.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam ${GENOME_FA} ${GENOME_NAME};
 
+# ====================================================================================== #
+# -------------------------------------------------------------------------------------- #
+# --- Summary steps to be run when all individuals are finished
+# -------------------------------------------------------------------------------------- #
+# ====================================================================================== #
+
+# -------------------------------------------------------------------------------------- #
+# --- Merge VCF files from individual SNP calling
+# -------------------------------------------------------------------------------------- #
+
+# Merged VCF depends on individual VCFs, VCFtools, and scripts/merge_vcf.sh
+results/merged.flt.vcf : results/*.bwa.${GENOME_NAME}.passed.realn.flt.vcf ${VCFTOOLS}/* #scripts/merge_vcf.sh
+	@echo "# === Merging individual VCF SNP files ======================================== #";
+	${SHELL_EXPORT} ./scripts/merge_vcf.sh;
+
+# -------------------------------------------------------------------------------------- #
+# --- Get stats on merged VCF
+# -------------------------------------------------------------------------------------- #
+
+# File of SNP stats depends on VCF file, VCFtools, and scripts/get_snp_stats.sh
+results/merged.flt.vcf.stats.txt : results/merged.flt.vcf ${VCFTOOLS}/* #scripts/get_snp_stats.sh
+	@echo "# === Getting basic SNPs stats =============================== #";
+	${SHELL_EXPORT} ./scripts/get_snp_stats.sh results/merged.flt.vcf;

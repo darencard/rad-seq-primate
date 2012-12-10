@@ -21,6 +21,6 @@ java -jar ${PICARD}/AddOrReplaceReadGroups.jar \
 	RGLB=${IND_ID} \
 	RGPL=Illumina \
 	RGPU=Group1 \
-	RGSM=Grp1
+	RGSM=${IND_ID}
 
 exit;

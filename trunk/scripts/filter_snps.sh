@@ -22,5 +22,12 @@ ${BCFTOOLS}/bcftools view ${IN_BCF} | \
 	${BCFTOOLS}/vcfutils.pl varFilter -d ${SNP_MIN_COV} -D ${SNP_MAX_COV} \
 	> ${OUT_VCF};
 
+# While we're here, make indexed *.vcf.gz files
+
+export PATH=$PATH:$TABIX
+
+bgzip -c ${OUT_VCF} > ${OUT_VCF}.gz
+tabix -p vcf ${OUT_VCF}.gz
+
 exit;
 
