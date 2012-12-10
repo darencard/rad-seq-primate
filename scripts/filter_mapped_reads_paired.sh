@@ -13,11 +13,10 @@ fi
 
 GENOME_CODE=$1
 
-# Removed "-isProperPair true"
+# Removed "-isProperPair true" and "-isPaired true"
 
 ${BAMTOOLS}/bamtools filter \
 	-isMapped true \
-	-isPaired true \
 	-in results/${IND_ID}.bwa.${GENOME_CODE}.fixed.bam \
 	-out results/${IND_ID}.bwa.${GENOME_CODE}.fixed.filtered.bam
 

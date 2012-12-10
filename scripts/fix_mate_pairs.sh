@@ -21,7 +21,7 @@ mkdir -p $TMP_DIR
 # Also shorten the filename
 java -Djava.io.tmpdir=${TMP_DIR} \
 	-jar ${PICARD}/FixMateInformation.jar \
-	INPUT= results/${IND_ID}.bwa.${GENOME_CODE}.sam.bam.sorted.bam \
+	INPUT= results/${IND_ID}_MERGED.bwa.${GENOME_CODE}.sam.bam.sorted.bam \
 	OUTPUT=results/${IND_ID}.bwa.${GENOME_CODE}.fixed.bam \
 	SO=coordinate \
 	VALIDATION_STRINGENCY=LENIENT \

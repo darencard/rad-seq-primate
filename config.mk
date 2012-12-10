@@ -9,12 +9,13 @@
 # -------------------------------------------------------------------------------------- #
 
 # Individual ID (used to name files)
-IND_ID=Tgelada871162
+IND_ID=CTA
 
 # Paths to input reads files
 # Must be in FASTQ format
 READ1=./data/${IND_ID}.read1.fastq
 READ2=./data/${IND_ID}.read2.fastq
+READ_SE=./data/${IND_ID}_SE.fastq
 
 # Paths to genomes files
 # Must be in FASTA format

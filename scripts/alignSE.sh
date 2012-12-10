@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ------------------------------------------------------------------------------
-# --- Align reads to genome with BWA
+# --- Align SE reads to genome with BWA. Then sneak them into PE BAM
 # ------------------------------------------------------------------------------
 
 # Check that genome FASTA, and genome code were passed as parameters
@@ -18,21 +18,13 @@ GENOME_CODE=$2
 echo "CMD: $BWA/bwa aln \
 	$BWA_ALN_PARAM \
 	$GENOME_PATH \
-	$READ1 > results/${IND_ID}.read1.bwa.${GENOME_CODE}.sai";
+	$READ_SE \
+	> results/${IND_ID}.readSE.bwa.${GENOME_CODE}.sai;";
 
 $BWA/bwa aln \
 	$BWA_ALN_PARAM \
 	$GENOME_PATH \
-	$READ1 > results/${IND_ID}.read1.bwa.${GENOME_CODE}.sai
-
-echo "CMD: $BWA/bwa aln \
-	$BWA_ALN_PARAM \
-	$GENOME_PATH \
-	$READ2 > results/${IND_ID}.read2.bwa.${GENOME_CODE}.sai";
-
-$BWA/bwa aln \
-	$BWA_ALN_PARAM \
-	$GENOME_PATH \
-	$READ2 > results/${IND_ID}.read2.bwa.${GENOME_CODE}.sai
+	$READ_SE \
+	> results/${IND_ID}.readSE.bwa.${GENOME_CODE}.sai;
 
 exit;

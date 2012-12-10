@@ -2,11 +2,11 @@
 \author{
         Christina M. Bergey
 			\and
-			Andrew S. Burrell
-			\and
-			Luca S.J. Pozzi
+			Luca Pozzi
 			\and
 			Todd R. Disotell
+			\and
+			Andrew S. Burrell
 	}
 \date{\today}
 
@@ -19,7 +19,7 @@
 \maketitle
 
 \begin{abstract}
-\ldots Blah, blah, blah, RADseq, blah, blah, Cercopithecoidea. \ldots
+\ldots (This is the blurb from the email.) Our paper is an introduction to a 2nd generation sequencing technique for typing thousands of genome-wide markers from non-model organisms. Though it's been used in other taxa, this would be the first published application to primates. We demonstrate it with six Cercopithecoids and discuss its promise for doing mutli-locus population genetics in primates. \ldots
 \end{abstract}
 
 \section{Introduction}
@@ -52,12 +52,13 @@
 	
 	To assess how many restriction sites were successfully sequenced and to analyze the degree of overlap between multiplexed individual's datasets, we first found all possible \emph{PspXI} cut sites using the oligoMatch utility in the USCS Genome Browser program (\textcolor{red}{ref}). This allowed us to calculate the coverage of these restriction site-associated regions using BEDtools' multiBamCov program (\textcolor{red}{ref}).
 
-%\paragraph{Analysis Pipeline - Inferring Phylogeny}
-%\begin{itemize}
-%	\item Using Stacks? 
-%	\item Using method like cichlid people?
-%	\item Using method like Rubin et al %http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0033394
-%\end{itemize}
+\paragraph{Analysis Pipeline - Inferring Phylogeny}
+\begin{itemize}
+	\item Using method like cichlid people?
+	\item Using method like Rubin et al? 
+	\item Concatenated SNPs (not indels) into alignment. 
+	\item Dimensions = 6 x ???
+\end{itemize}
 
 \section{Results}
 
@@ -74,7 +75,7 @@
 	\begin{tabular}{ p{3cm} || l || p{1.75cm} | p{1.75cm} || p{1.75cm} | p{1.75cm} | l }
 		\hline
 		Taxon & Source & \# Reads & \# Filtered Reads & \# Loci $\ge 1$ Read & \# Loci $\ge 3$ Reads & \# SNPs \\ \hline\hline
-		\textcolor{red}{Langur?} & \textcolor{red}{Unknown} & 1,367,050 & 306,248 & 47,516 & 24,052 & 363,501 \\ \hline
+		\emph{Semnopithecus entellus} & \textcolor{red}{Unknown} & 1,367,050 & 306,248 & 47,516 & 24,052 & 363,501 \\ \hline
 		\emph{Allenopithecus nigroviridis} & \textcolor{red}{Unknown} & 1,325,558 & 447,279 & 62,824 & 40,244 & 356,750 \\ \hline
 		\emph{Macaca mulatta} & \textcolor{red}{Unknown} & 481,376 & 234,659 & 77,798 & 32,302 & 279,350 \\ \hline
 		\emph{Cercocebus torquatus atys} & \textcolor{red}{Unknown} & 297,290 & 124,700 & 48,440 & 13,104 & 319,766 \\ \hline
