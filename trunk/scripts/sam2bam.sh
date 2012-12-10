@@ -4,22 +4,26 @@
 # --- Convert SAM to BAM
 # ------------------------------------------------------------------------------
 
-# Check that genome FASTA and genome code were passed as parameters
-USAGE="$0 genome.index.fai genome_code";
+# Check that genome FASTA and input SAM were passed as parameters
+USAGE="$0 genome.index.fai in.sam";
 if [ -z "$2" ]; then
 	echo "ERROR: $USAGE";
 	exit 1;
 fi
 
 INDEX_FAI=$1
-GENOME_CODE=$2
+IN_SAM=$2
+
+echo "$SAMTOOLS/samtools view \
+	-b \
+	-t ${INDEX_FAI} \
+	-o ${IN_SAM}.bam \
+	$IN_SAM";
 
 $SAMTOOLS/samtools view \
 	-b \
 	-t ${INDEX_FAI} \
-	-o results/${IND_ID}.bwa.${GENOME_CODE}.sam.bam \
-	results/${IND_ID}.bwa.${GENOME_CODE}.sam
-
-echo results/${IND_ID}.bwa.${GENOME_CODE}.sam
+	-o ${IN_SAM}.bam \
+	$IN_SAM
 
 exit;

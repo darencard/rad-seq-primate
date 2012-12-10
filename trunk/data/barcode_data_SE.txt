@@ -1,0 +1,15 @@
+GGTAATCGA OTO030_SE.fastq
+CAGAATCGA NC1997_SE.fastq
+ACCAATCGA female12_SE.fastq
+CGATATCGA tarsius_SE.fastq
+GTCTATCGA Cebus_SE.fastq
+GAAGATCGA Call_jacchus_SE.fastq
+CTTGATCGA Coast_langur_SE.fastq
+TCGGATCGA Allenopithecus_SE.fastq
+ATGCATCGA Mmulatta1_SE.fastq
+GCAATTCGA CTA_SE.fastq
+AGGATTCGA Tgelada871162_SE.fastq
+CTCATTCGA Papio19349_SE.fastq
+GAGTTTCGA Siamang_SE.fastq
+TGCTTTCGA P_trog_SE.fastq
+ACTGTTCGA H_sapiens_SE.fastq

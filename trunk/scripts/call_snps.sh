@@ -12,17 +12,19 @@ if [ -z "$2" ]; then
 fi
 
 IN_BAM=$1
-OUT_BCF=$(echo $IN_BAM | sed 's/\.bam/.raw.bcf/')
+OUT_BCF=$(echo $IN_BAM | sed 's/\.bam$/.raw.bcf/')
 GENOME_FA=$2
 
 echo "${SAMTOOLS}/samtools mpileup \
-	-uf ${GENOME_FA} \
+	-C50 \
+	-Auf ${GENOME_FA} \
 	${IN_BAM}  | \
 	${BCFTOOLS}/bcftools view -bvcg - \
 	> ${OUT_BCF}";
 
 ${SAMTOOLS}/samtools mpileup \
-	-uf ${GENOME_FA} \
+	-C50 \
+	-Auf ${GENOME_FA} \
 	${IN_BAM}  | \
 	${BCFTOOLS}/bcftools view -bvcg - \
 	> ${OUT_BCF}

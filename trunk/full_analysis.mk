@@ -17,18 +17,20 @@ _BWA_INDEX = $(subst .fa,,${PROTO_BWA_INDEX})
 # --- preliminary_steps
 index_genome : ${GENOME_FA}i ${_BWA_INDEX}
 # --- pre_aln_analysis_steps:
-fastqc : reports/${IND_ID}.read1.stats.zip reports/${IND_ID}.read2.stats.zip
+fastqc : reports/${IND_ID}.read1.stats.zip reports/${IND_ID}.read2.stats.zip reports/${IND_ID}.readSE.stats.zip
 # --- alignment_steps
-align : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai
+align : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai results/${IND_ID}.readSE.bwa.${GENOME_NAME}.sai
 sampe : results/${IND_ID}.bwa.${GENOME_NAME}.sam
-sam2bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam
-sort_and_index_bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
+samse : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam
+sam2bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam
+sort_and_index_bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
+merge_bam : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
 get_alignment_stats : reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.txt
 # --- post_alignment_filtering_steps
 fix_mate_pairs : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.txt
 filter_unmapped : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt
-remove_dups : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam.bai reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.nodup.txt
-add_read_groups : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.RG.bam
+remove_dups : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt
+add_read_groups : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam
 filter_bad_qual : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.passed.txt
 # --- snp_calling_steps
 local_realign_targets : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list
@@ -41,7 +43,7 @@ get_snp_stats : reports/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf.stats.
 # Group steps together
 preliminary_steps : index_genome
 pre_aln_analysis_steps : fastqc
-alignment_steps : align sampe sam2bam sort_and_index_bam get_alignment_stats
+alignment_steps : align sampe samse sam2bam sort_and_index_bam merge_bam get_alignment_stats
 post_alignment_filtering_steps : fix_mate_pairs filter_unmapped remove_dups add_read_groups filter_bad_qual
 snp_calling_steps : local_realign_targets local_realign call_snps filter_snps get_snp_stats #call_consensus
 
@@ -88,12 +90,15 @@ ${_BWA_INDEX} : ${GENOME_FA}i
 
 # FastQC reports depend on read files, FastQC, and run_fastqc.sh
 reports/${IND_ID}.read1.stats.zip : ${READ1} ${FASTQC}/* #scripts/run_fastqc.sh
-	@echo "# === Analyzing quality of reads (1st pair) before filtering ================== #";
+	@echo "# === Analyzing quality of reads (1st pair) before mapping ==================== #";
 	${SHELL_EXPORT} ./scripts/run_fastqc.sh ${READ1} ${IND_ID}.read1.stats;
 reports/${IND_ID}.read2.stats.zip : ${READ2} ${FASTQC}/* #scripts/run_fastqc.sh
-	@echo "# === Analyzing quality of reads (2nd pair) before filtering ================== #";
+	@echo "# === Analyzing quality of reads (2nd pair) before mapping ==================== #";
 	${SHELL_EXPORT} ./scripts/run_fastqc.sh ${READ2} ${IND_ID}.read2.stats;
-	
+reports/${IND_ID}.readSE.stats.zip : ${READ_SE} ${FASTQC}/* #scripts/run_fastqc.sh
+	@echo "# === Analyzing quality of reads (SE) before mapping ========================== #";
+	${SHELL_EXPORT} ./scripts/run_fastqc.sh ${READ_SE} ${IND_ID}.readSE.stats;
+
 # ====================================================================================== #
 # -------------------------------------------------------------------------------------- #
 # --- Mapping to reference genomes
@@ -104,24 +109,35 @@ reports/${IND_ID}.read2.stats.zip : ${READ2} ${FASTQC}/* #scripts/run_fastqc.sh
 # --- Align reads to genome with BWA
 # -------------------------------------------------------------------------------------- #
 
-# Alignment output (*.sai) depends on bwa, the filtered reads FASTAs, the genome (index), and align.sh
+# Alignment output (*.sai) depends on bwa, the reads FASTAs, the genome (index), and align.sh
 # Using the first read as a stand in for the both 
 results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai : ${BWA}/* ${READ1} ${READ2} ${GENOME_FA}i #scripts/align.sh
-	@echo "# === Aligning reads to genome ========================================== #";
+	@echo "# === Aligning reads to genome ================================================ #";
 	${SHELL_EXPORT} ./scripts/align.sh ${GENOME_FA} ${GENOME_NAME};
 
 # Read 2 depends on read 1
 results/${IND_ID}.read2.bwa.${GENOME_NAME}.sai : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai
 
+# Align SE reads
+# Alignment output (*.sai) depends on bwa, the reads FASTAs, the genome (index), and alignSE.sh
+results/${IND_ID}.readSE.bwa.${GENOME_NAME}.sai : ${BWA}/* ${READ_SE} ${GENOME_FA}i #scripts/align.sh
+	@echo "# === Aligning SE reads to genome ============================================= #";
+	${SHELL_EXPORT} ./scripts/alignSE.sh ${GENOME_FA} ${GENOME_NAME};
+
 # -------------------------------------------------------------------------------------- #
-# --- Run sampe to generate SAM files
+# --- Run sampe and samse to generate SAM files
 # -------------------------------------------------------------------------------------- #
 
 # sampe output (*.sam) depends on *.sai files and sampe.sh
 # Using the first read as a stand in for the both
 results/${IND_ID}.bwa.${GENOME_NAME}.sam : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai #scripts/sampe.sh
-	@echo "# === Combining reads to make SAM file ======================= #";
+	@echo "# === Making SAM file from PE reads =========================================== #";
 	${SHELL_EXPORT} ./scripts/sampe.sh ${GENOME_FA} ${GENOME_NAME};
+
+# samse output (*.sam) depends on *.sai file and sampe.sh
+results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam : results/${IND_ID}.readSE.bwa.${GENOME_NAME}.sai #scripts/sampe.sh
+	@echo "# === Making SAM file from SE reads =========================================== #";
+	${SHELL_EXPORT} ./scripts/samse.sh ${GENOME_FA} ${GENOME_NAME};
 
 # -------------------------------------------------------------------------------------- #
 # --- Convert SAM file to BAM file
@@ -130,7 +146,12 @@ results/${IND_ID}.bwa.${GENOME_NAME}.sam : results/${IND_ID}.read1.bwa.${GENOME_
 # BAM file depends on SAM file, samtools, genome .fai index, and scripts/sam2bam.sh
 results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam ${SAMTOOLS}/* ${GENOME_FA}i #scripts/sam2bam.sh
 	@echo "# === Converting SAM file to BAM file ======================== #";
-	${SHELL_EXPORT} ./scripts/sam2bam.sh ${GENOME_FA}i ${GENOME_NAME};
+	${SHELL_EXPORT} ./scripts/sam2bam.sh ${GENOME_FA}i results/${IND_ID}.bwa.${GENOME_NAME}.sam;
+
+# Do same for SE
+results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam ${SAMTOOLS}/* ${GENOME_FA}i #scripts/sam2bam.sh
+	@echo "# === Converting SAM file to BAM file ======================== #";
+	${SHELL_EXPORT} ./scripts/sam2bam.sh ${GENOME_FA}i results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam;
 
 # -------------------------------------------------------------------------------------- #
 # --- Sort and index BAM
@@ -138,18 +159,35 @@ results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.bwa.${GENOME_NA
 
 # Sorted BAM file index depends on unsorted BAM file, scripts/sort_bam, and scripts/index_bam.sh
 results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam #scripts/sort_bam scripts/index_bam.sh
-	@echo "# === Sorting and Indexing BAM file ========================== #";
+	@echo "# === Sorting and Indexing PE BAM file ========================== #";
 	${SHELL_EXPORT} ./scripts/sort_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam;
 	${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam;
+
+# Sorted BAM file index depends on unsorted BAM file, scripts/sort_bam, and scripts/index_bam.sh
+results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam #scripts/sort_bam scripts/index_bam.sh
+	@echo "# === Sorting and Indexing SE BAM file ========================== #";
+	${SHELL_EXPORT} ./scripts/sort_bam.sh results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam;
+	${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam;
+
+
+# -------------------------------------------------------------------------------------- #
+# --- Merge PE and SE BAMs
+# -------------------------------------------------------------------------------------- #
+
+# Merged BAM file [index] depends on input PE and input SE BAMs, SAMtools, and scripts/merge_bam.sh
+results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam ${SAMTOOLS}/* #scripts/merge_bam.sh
+	@echo "# === Merging SE and PE BAM files ========================== #";
+	${SHELL_EXPORT} ./scripts/merge_bam.sh ${GENOME_NAME}
+	${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam;
 
 # -------------------------------------------------------------------------------------- #
 # --- Analyze alignment output with flagstat, idxstats, and stats
 # -------------------------------------------------------------------------------------- #
 
 # Align stats report depends on the sorted BAM and scripts/get_alignment_stats.sh
-reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.txt : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam #scripts/get_alignment_stats.sh
+reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam #scripts/get_alignment_stats.sh
 	@echo "# === Analyzing alignment output ============================= #";
-	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam reports/${IND_ID}.bwa.${GENOME_CODE}.aln_stats.txt	
+	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt	
 
 # ====================================================================================== #
 # -------------------------------------------------------------------------------------- #
@@ -162,17 +200,17 @@ reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.txt : results/${IND_ID}.bwa.${GEN
 # -------------------------------------------------------------------------------------- #
 
 # BAM with fixed mate pair info depends on output BAM from sort_and_index.sh, Picard, and scripts/fix_mate_pairs.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam ${PICARD}/* # scripts/fix_mate_pairs.sh
+results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai ${PICARD}/* # scripts/fix_mate_pairs.sh
 	@echo "# === Fixing mate pair info ======================== #";
 	${SHELL_EXPORT} ./scripts/fix_mate_pairs.sh ${GENOME_NAME};
 
 # Align stats report depends on the BAM with fixed mate pair info and scripts/get_alignment_stats.sh
-reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.txt : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam #scripts/get_alignment_stats.sh
+reports/${IND_ID}.bwa.${GENOME_NAME}_MERGED.aln_stats.pairsfix.txt : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam #scripts/get_alignment_stats.sh
 	@echo "# === Analyzing alignment output (post mate pair fix) ======== #";
-	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.txt;
+	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam reports/${IND_ID}.bwa.${GENOME_NAME}_MERGED.aln_stats.pairsfix.txt;
 
 # -------------------------------------------------------------------------------------- #
-# --- Filtering for mapped and paired
+# --- Filtering for mapped
 # -------------------------------------------------------------------------------------- #
 
 # Filtered BAM [index file] depends on output BAM from fix_mate_pairs.sh, BAMtools, and scripts/filter_mapped_reads_paired.sh
@@ -182,31 +220,31 @@ results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai : results/${IND_ID}.
 	${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam;
 
 # Align stats report depends on filtered BAM and scripts/get_alignment_stats.sh
-reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam #scripts/get_alignment_stats.sh
-	@echo "# === Analyzing alignment output (filtered for paired) ======= #";
+reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai #scripts/get_alignment_stats.sh
+	@echo "# === Analyzing alignment output (filtered for mapped) ======= #";
 	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt;
 
-# -------------------------------------------------------------------------------------- #
-# --- Remove duplicates
-# -------------------------------------------------------------------------------------- #
-
-# BAM sans dups [index file] depends on output BAM from filter_mapped_reads_paired.sh, Picard, and scripts/remove_dups.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam ${PICARD}/* # scripts/remove_dups.sh
-	@echo "# === Removing duplicate reads mapped ========================= #";
-	${SHELL_EXPORT} ./scripts/remove_dups.sh ${GENOME_NAME};
-	${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam;
-
-# Align stats report depends on BAM sans dups and scripts/get_alignment_stats.sh
-reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.nodup.txt : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam #scripts/get_alignment_stats.sh
-	@echo "# === Analyzing alignment output (duplicates removed) ======== #";
-	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.nodup.txt;
+#	# -------------------------------------------------------------------------------------- #
+#	# --- Remove duplicates
+#	# -------------------------------------------------------------------------------------- #
+#	
+#	# BAM sans dups [index file] depends on output BAM from filter_mapped_reads_paired.sh, Picard, and scripts/remove_dups.sh
+#	results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai ${PICARD}/* # scripts/remove_dups.sh
+#		@echo "# === Removing duplicate reads mapped ========================= #";
+#		${SHELL_EXPORT} ./scripts/remove_dups.sh ${GENOME_NAME};
+#		${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam;
+#	
+#	# Align stats report depends on BAM sans dups and scripts/get_alignment_stats.sh
+#	reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.nodup.txt : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam.bai #scripts/get_alignment_stats.sh
+#		@echo "# === Analyzing alignment output (duplicates removed) ======== #";
+#		${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.nodup.txt;
 
 # -------------------------------------------------------------------------------------- #
 # --- Add read groups
 # -------------------------------------------------------------------------------------- #
 
 # BAM without RGs depends on output BAM from remove_dups.sh, Picard, and scripts/add_read_groups.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.RG.bam : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam ${PICARD}/* # scripts/add_read_groups.sh
+results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai ${PICARD}/* # scripts/add_read_groups.sh
 	@echo "# === Adding read groups ===================== #";
 	${SHELL_EXPORT} ./scripts/add_read_groups.sh ${GENOME_NAME};
 
@@ -215,13 +253,13 @@ results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.RG.bam : results/${IND
 # -------------------------------------------------------------------------------------- #
 
 # Filtered BAM depends on output BAM from add_read_groups.sh, BAMtools, and scripts/filter_mapped_reads_quality.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.nodup.RG.bam ${BEDTOOLS}/* # scripts/filter_mapped_reads_quality.sh
+results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam ${BEDTOOLS}/* # scripts/filter_mapped_reads_quality.sh
 	@echo "# === Filtering low quality reads mapped to genome ====================== #";
 	${SHELL_EXPORT} ./scripts/filter_mapped_reads_quality.sh ${GENOME_NAME};
 	${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam;
 
 # Align stats report depends on quality-filtered BAM and scripts/get_alignment_stats.sh
-reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.passed.txt : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam #scripts/get_alignment_stats.sh
+reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.passed.txt : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai #scripts/get_alignment_stats.sh
 	@echo "# === Analyzing alignment output (after qual filtering) ====== #";
 	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.passed.txt;
 

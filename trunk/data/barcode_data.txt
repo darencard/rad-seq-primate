@@ -1,0 +1,15 @@
+GGTAATCGA OTO030.read1.fastq OTO030.read2.fastq
+CAGAATCGA NC1997.read1.fastq NC1997.read2.fastq
+ACCAATCGA female12.read1.fastq female12.read2.fastq
+CGATATCGA tarsius.read1.fastq tarsius.read2.fastq
+GTCTATCGA Cebus.read1.fastq Cebus.read2.fastq
+GAAGATCGA Call_jacchus.read1.fastq Call_jacchus.read2.fastq
+CTTGATCGA Coast_langur.read1.fastq Coast_langur.read2.fastq
+TCGGATCGA Allenopithecus.read1.fastq Allenopithecus.read2.fastq
+ATGCATCGA Mmulatta1.read1.fastq Mmulatta1.read2.fastq
+GCAATTCGA CTA.read1.fastq CTA.read2.fastq
+AGGATTCGA Tgelada871162.read1.fastq Tgelada871162.read2.fastq
+CTCATTCGA Papio19349.read1.fastq Papio19349.read2.fastq
+GAGTTTCGA Siamang.read1.fastq Siamang.read2.fastq
+TGCTTTCGA P_trog.read1.fastq P_trog.read2.fastq
+ACTGTTCGA H_sapiens.read1.fastq H_sapiens.read2.fastq
