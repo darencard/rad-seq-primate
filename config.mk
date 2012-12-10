@@ -40,6 +40,7 @@ GATK=/home/cmb433/exome_macaque/bin/GATK
 BCFTOOLS=/home/cmb433/exome_macaque/bin/samtools/bcftools
 VCFTOOLS=/home/cmb433/exome_macaque/bin/vcftools_0.1.9/bin
 PSMC=/home/cmb433/exome_macaque/bin/psmc
+TABIX=/home/cmb433/exome_macaque/bin/tabix-0.2.6
 
 # -------------------------------------------------------------------------------------- #
 # --- Parameters for external programs
