@@ -23,26 +23,34 @@
 \end{abstract}
 
 \section{Introduction}
-\begin{itemize}
-	\item Next-gen sequencing revolution promises gains in primatology
-	\item Still expensive
-	\item Many genomes, but still tough doing genomics on non-model organisms
-	\item What is RADseq?
-	\item Previous RADseq studies
-	\item Why would it be good for primates
-	\item PRESENT STUDY
-	\begin{itemize}
-		\item We did RADseq on 6 Cercopithecoids
-		\item Assessed how well it worked
-		\item Show it has promise for primates
-	\end{itemize}
-\end{itemize}
+
+During the first decades of molecular primatology, a formidable impediment to researchers was the need to develop and type polymorphic markers in a taxon of interest. The markers that resulted from this tedious and expensive task were often uninformative when applied outside of the population used in their design, necessitating further rounds of primer design or microsatellite assays, for example (Davey et al., 2011). Due to the bottleneck of marker discovery, many population genetic or phylogenetic studies in molecular primatology have been based on one or few loci (Ting and Sterner, published yet?). Such inferences can reliably give the evolutionary history of those particular regions of the genome, but they fail to adequately capture the complete complex history of the population given the mosaic nature of genomic evolution (some gene-tree species tree review ref). Adequate resolution depends on high marker density, and until recently that goal has been out of reach for many primate researchers.
+
+The rapidly decreasing costs of DNA sequencing technology have promised revolutionary gains for primatology (Enard and Paabo 2004, maybe? Goodman et al 2005?). A primate researcher benefits from the many nearby sequenced and assembled reference genomes in the order, but genomic studies of non-model organisms nevertheless remain difficult. Though the cost of low coverage whole genome sequencing has fallen to a level feasible for many researchers' budgets, sequencing whole genomes for the tens or hundreds of individuals desired in a typical population genetic study is often prohibitively expensive and quite possibly superfluous. 
+
+Fortunately, researchers have recently developed techniques that reduce the complexity of the genome and allow discovery and typing of thousands or tens of thousands of genome-wide makers in many individuals in a single step. RAD-seq is one such simple, inexpensive reduced representation technique which allows for the sequencing of small fragments of the genome adjacent to restriction enzyme cut sites (Baird et al., 2008). These RAD tags, or restriction-site association DNA tags, were originally developed for use in microarray hybridization typing (Miller et al., 2007), but an updated protocol substitutes second-generation DNA sequencing to rapidly discover and type SNPs (Baird et al., 2008). The lack of reliance on a reference genome and applicability to datasets of many individuals make it a promising technique for phylogenetic or population genetic studies in non-model organisms, such as many primates.
+
+In the present study, we summarize the RAD-seq method in brief and note the many and varied applications since its development. We go on to discuss reasons that make RAD-seq promising for primatologists, and then demonstrate the technique in 5 primates: a lemur, New World monkey, Old World monkey, and two apes.  
+
+\subsection{The RAD-seq Technique}
+
+[The RAD-seq method, in brief. Also, Fig. 1]
+
+\subsection{Previous RAD-seq Studies}
+
+[Previous RADseq studies. Focus on pop gen, phylogeny studies]
+
+\subsection{Prospective Primate Applications}
+
+[Why it would be good in primates.]
+
+Changing the restriction enzyme to a more or less frequent cutter allows fine grained control over the number of loci, number of individuals multiplexed, and depth of coverage, allowing researchers to tailor marker discovery to their hypothesis. 
 
 \section{Methods}
 
 \paragraph{Library Preparation and Sequencing}
 
-	Genomic DNA from 6 primates was digested with \emph{PspXI} (New England Biolabs) and used to create a multiplexed RAD tag library. Our library preparation method followed that of Etter et al, 2011 with the following modifications: the P1 adapter top\textcolor{red}{(?)} oligonucleotide was modified to have an overhang corresponding to the cut site of \emph{PspXI}, and a longer P2 adapter suitable for paired end sequencing was used (P2\_top: 5'-\textcolor{red}{SEQUENCEHERE}-3'; P2\_bottom: 5'-\textcolor{red}{SEQUENCEHERE}-3'). Individual-specific barcodes contained in the P1 adapter differed by at least \textcolor{red}{three} nucleotides. We chose \emph{PspXI} based on the results of \emph{in silico} digestion of the human, rhesus macaque, and baboon reference genomes using custom Perl scripts (\textcolor{red}{refs}). We sequenced the prepared library as one 150-cycle paired-end run of an Illumina MiSeq at the NYU Langone Medical Center's Genome Technology Center using a spike-in of 30\% PhiX DNA to control for low diversity in the library at the barcode and restriction sites. Other individuals were sequenced alongside those of the present study. Sequences are available to download from the NCBI Short Read Archive (accession number \textcolor{red}{SRAXXXXXX.X}).
+	Genomic DNA from 5 primates was digested with \emph{PspXI} (New England Biolabs) and used to create a multiplexed RAD tag library. Our library preparation method followed that of Etter et al, 2011 with the following modifications: the P1 adapter top\textcolor{red}{(?)} oligonucleotide was modified to have an overhang corresponding to the cut site of \emph{PspXI}, and a longer P2 adapter suitable for paired end sequencing was used (P2\_top: 5'-\textcolor{red}{SEQUENCEHERE}-3'; P2\_bottom: 5'-\textcolor{red}{SEQUENCEHERE}-3'). Individual-specific barcodes contained in the P1 adapter differed by at least \textcolor{red}{three} nucleotides. We chose \emph{PspXI} based on the results of \emph{in silico} digestion of the human, rhesus macaque, and baboon reference genomes using custom Perl scripts (\textcolor{red}{refs}). We sequenced the prepared library as one 150-cycle paired-end run of an Illumina MiSeq at the NYU Langone Medical Center's Genome Technology Center using a spike-in of 30\% PhiX DNA to control for low diversity in the library at the barcode and restriction sites. Other individuals were sequenced alongside those of the present study. Sequences are available to download from the NCBI Short Read Archive (accession number \textcolor{red}{SRAXXXXXX.X}).
 
 \paragraph{Sequence Analysis}
 
@@ -107,8 +115,10 @@ In the rhesus macaque genome, we found 54,364 possible cut sites for \emph{PspXI
 		\item Cheap and easy to create libraries. Competent lab can do it in two days. (Ha!)
 		\item Multiplexing is great for pop gen studies.
 		\item Enzyme choice allows control over coverage, number of individuals, number of loci.
+		\item Baird: "different marker densities can be attained by choice of restriction enzyme"
 	\end{itemize}
 	\item Potential problems with RADseq method
+	\item ddRADseq
 	\item Promise for primatology
 \end{itemize}
 
