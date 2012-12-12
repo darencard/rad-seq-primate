@@ -58,7 +58,7 @@ To assess the RAD tag coverage, we mapped human and chimpanzee reads to the high
 
 After performing local realignment around indels with GATK (\textcolor{red}{ref}), we identified SNPs and short indels using SAMtools mpileup and BCFtools (\textcolor{red}{ref}). We required a minimum coverage of 3 reads and a maximum of 100 to call a SNP or an indel at a given location. We tallied orthologous SNPs using VCFtools (\textcolor{red}{ref}).
 	
-To assess how many restriction sites were successfully sequenced and to analyze the degree of overlap between multiplexed individual's datasets, we first found all possible \emph{PspXI} cut sites in the human genome using the oligoMatch utility in the USCS Genome Browser program (\textcolor{red}{ref}). This allowed us to calculate the coverage of these restriction site-associated regions using BEDtools' multiBamCov program (\textcolor{red}{ref}).
+To assess how many restriction sites were successfully sequenced and to analyze the degree of overlap between multiplexed individual's datasets, we first found all possible \emph{PspXI} cut sites in the human genome using the oligoMatch utility in the USCS Genome Browser program and created a BED file of all regions 1000 upstream and downstream. (\textcolor{red}{ref}). This allowed us to calculate the coverage of these restriction site-associated regions using BEDtools' multiBamCov program (\textcolor{red}{ref}).
 
 \section{Results}
 
@@ -80,7 +80,7 @@ To assess how many restriction sites were successfully sequenced and to analyze 
 \end{center}
 \end{table}
 
-In the human genome, we found \_\_\_ possible cut sites for \emph{PspXI} and \_\_\_ possible sequencing sites (two per cut site, one upstream and one downstream). Of those, \_\_\_ sites (\_\_\_\%) were covered by at least one read in human and \_\_\_ sites (\%) in chimpanzee. For \_\_\_ sites (\_\_\%), both chimpanzee and human had at least one read. When we restrict the analysis to sites with at least three reads, \_\_\_ sites (\_\_\_\%) were covered in human, \_\_\_ sites (\_\_\_\%) were covered in chimpanzee, and \_\_\_ sites (\_\_\_\%) in both.
+In the human genome, we found 58,172 possible cut sites for \emph{PspXI} and 116,344 possible sequencing sites (two per cut site, one upstream and one downstream). Of those, \_\_\_ sites (\_\_\_\%) were covered by at least one read in human and \_\_\_ sites (\%) in chimpanzee. For \_\_\_ sites (\_\_\%), both chimpanzee and human had at least one read. When we restrict the analysis to sites with at least three reads, \_\_\_ sites (\_\_\_\%) were covered in human, \_\_\_ sites (\_\_\_\%) were covered in chimpanzee, and \_\_\_ sites (\_\_\_\%) in both.
 
 \begin{table}[h]
 \caption{Mapped Reads Data}
@@ -118,6 +118,9 @@ RADseq is shitty when phylogenetic distances are great. Works much better within
 ddRADseq
 
 \section{Acknowledgements}
+
+The authors would like to thank the NYU Langone Medical Center's Genome Technology Center for assistance with library preparation and sequencing.
+
 \begin{itemize}
 	\item NYU Med School folk
 	\item \textcolor{red}{Grants?}
