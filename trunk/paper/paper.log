@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  12 DEC 2012 14:05
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  12 DEC 2012 18:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -157,29 +157,59 @@ Missing character: There is no ï in font cmr12!
 Missing character: There is no ¬ in font cmr12!
 Missing character: There is no ‚ in font cmr12!
  [3] [4]
-Overfull \hbox (4.10158pt too wide) in paragraph at lines 61--62
-\OT1/cmr/m/n/12 with GATK ([]ref[]), we iden-ti-fied SNPs and short in-dels us-
-ing SAM-tools mpileup
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 71.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 71.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 71.
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
+[]\OT1/cmr/m/n/10.95 # Ind.
  []
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 77.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 77.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 77.
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--79
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
 []\OT1/cmr/m/n/10.95 Mean
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
+\OT1/cmr/m/n/10.95 Cov-er-age
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 74--74
+[]\OT1/cmr/m/n/10.95 7.66
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 75--75
+[]\OT1/cmr/m/n/10.95 12.64
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--76
 []\OT1/cmr/m/it/10.95 Theropithecus
  []
 
 
-Overfull \hbox (68.69055pt too wide) in paragraph at lines 77--87
+Underfull \hbox (badness 10000) in paragraph at lines 76--76
+[]\OT1/cmr/m/n/10.95 9.70
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 77--77
+[]\OT1/cmr/m/n/10.95 11.50
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
+[]\OT1/cmr/m/n/10.95 17.37
+ []
+
+
+Overfull \hbox (105.22101pt too wide) in paragraph at lines 71--80
  [] 
  []
 
@@ -187,17 +217,17 @@ Overfull \hbox (68.69055pt too wide) in paragraph at lines 77--87
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [5]
-Overfull \hbox (9.36964pt too wide) in paragraph at lines 96--103
+Overfull \hbox (9.36964pt too wide) in paragraph at lines 89--95
  [] 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 126.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 106.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 126.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 106.
  [6] [7]
 (./paper.aux) ) 
 Here is how much of TeX's memory you used:
@@ -217,7 +247,7 @@ mr12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
 0.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10
 .pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.
 pfb>
-Output written on paper.pdf (7 pages, 124862 bytes).
+Output written on paper.pdf (7 pages, 127115 bytes).
 PDF statistics:
  60 PDF objects out of 1000 (max. 8388607)
  42 compressed objects within 1 object stream

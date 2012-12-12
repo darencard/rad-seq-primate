@@ -24,7 +24,7 @@
 
 \section{Introduction}
 
-[What is mol. primatology? Explain importance of developing markers across taxa in order to study primates at different levels (population, phylogeography, phylogenetics)] During the first decades of molecular primatology, an impediment to researchers was the need to develop and type polymorphic markers in a taxon of interest. The markers that resulted from this time-consuming and expensive task were often uninformative when applied outside of the population used in their design, necessitating further rounds of primer design or microsatellite assays, for example (Davey et al., 2011). \textcolor{red}{Due to the bottleneck of marker discovery}, many population genetic or phylogenetic studies in molecular primatology have been based on one or few loci, usually mitochondrial DNA or few microsatellites (\textcolor{red}{Ting and Sterner, 2012}). Such inferences can reliably give the evolutionary history of those particular regions of the genome, but they fail to adequately capture the complete complex history of the population given the mosaic nature of genomic evolution (Degnan and Rosenberg, 2009; Maddison, 1997; Edwards, 2009; Maddison and Knowles, 2006). Adequate resolution depends on high marker density, and until recently that goal has been out of reach for many primate researchers (Edwards, 2009).
+\textcolor{red}{[What is mol. primatology? Explain importance of developing markers across taxa in order to study primates at different levels (population, phylogeography, phylogenetics)]} During the first decades of molecular primatology, an impediment to researchers was the need to develop and type polymorphic markers in a taxon of interest. The markers that resulted from this time-consuming and expensive task were often uninformative when applied outside of the population used in their design, necessitating further rounds of primer design or microsatellite assays, for example (Davey et al., 2011). Due to the bottleneck caused by the inefficiency of marker discovery, many population genetic or phylogenetic studies in molecular primatology have been based on one or few loci, usually mitochondrial DNA or few microsatellites (Ting and Sterner, 2012). Such inferences can reliably give the evolutionary history of those particular regions of the genome, but they fail to adequately capture the complete complex history of the population given the mosaic nature of genomic evolution (Degnan and Rosenberg, 2009; Maddison, 1997; Edwards, 2009; Maddison and Knowles, 2006). Adequate resolution depends on high marker density, and until recently that goal has been out of reach for many primate researchers (Edwards, 2009).
 
 The rapidly decreasing costs of DNA sequencing technology have promised revolutionary gains for primatology (Enard and Paabo 2004; Goodman et al 2005; Ting and Sterner, 2012). A primate researcher benefits from the many nearby sequenced and assembled reference genomes in the order, but genomic studies of non-model organisms nevertheless remain difficult. Though the cost of whole genome sequencing has fallen to a level feasible for many researchers' budgets (e.g., Perry et al., 2012), sequencing whole genomes for the tens or hundreds of individuals desired in a typical population genetic study is often prohibitively expensive and quite possibly superfluous (McCormack, et al. 2012). Fortunately, researchers have recently developed techniques that reduce the complexity of the genome and allow discovery and typing of thousands or tens of thousands of genome-wide makers in many individuals in a single step (Davey et al., 2011; McCormack, et al. 2012). RAD-seq is one such simple, inexpensive reduced representation technique which allows for the sequencing of small fragments of the genome adjacent to restriction enzyme cut sites (Baird et al., 2008). These RAD tags, or restriction-site association DNA tags, were originally developed for use in microarray hybridization typing (Miller et al., 2007), but an updated protocol substitutes second-generation DNA sequencing to rapidly discover and type SNPs (Baird et al., 2008; Etter et al., 2011). The lack of reliance on a reference genome and applicability to datasets of many individuals make it a promising technique for phylogenetic or population genetic studies in non-model organisms, such as many primates.
 
@@ -50,25 +50,19 @@ Although RAD sequencing is more effective in addressing questions at or below th
 
 \paragraph{Sequence Analysis - Clustering and SNP Discovery}
 
-We demultiplexed, or separated by barcode, sequence reads and excluded from the analysis reads without an expected barcode or an intact restriction enzyme cut site. We also removed reads with any quality scores below 10. Using the program Stacks, we clustered all reads into matching sets and compared closely related sets to detect orthologous loci and SNPs using a maximum likelihood approach (\textcolor{red}{Stacks ref}). We tallied orthologous SNPs using VCFtools (\textcolor{red}{ref}).
-
-\textcolor{red}{[Phylogeny?]}
+We demultiplexed, or separated by barcode, sequence reads and excluded from the analysis reads without an expected barcode or an intact restriction enzyme cut site. We also removed reads with any quality scores below 10. Using the program Stacks, we clustered all reads into sets that differed by no more than two basepairs and compared closely related sets to detect orthologous loci and SNPs using a maximum likelihood approach (\textcolor{red}{Stacks ref}). We tallied orthologous SNPs using VCFtools (\textcolor{red}{ref}).
 
 \paragraph{Sequence Analysis - Assess RAD Tag Coverage}
 
-To assess the RAD tag coverage, we mapped human and chimpanzee reads to the human reference genome. Again, we excluded reads without an expected barcode or an intact restriction enzyme cut site. We aligned reads to the human reference genome (\textcolor{red}{hg19, ref}) using BWA with default parameters. We removed reads that were unmapped or that had low mapping quality after alignment using Picard (\textcolor{red}{ref}) and BamTools (\textcolor{red}{ref}). 
+To assess the RAD tag coverage, we mapped human and chimpanzee reads to the highest quality primate reference genome, that of humans. Again, we excluded reads without an expected barcode or an intact restriction enzyme cut site. We aligned reads to the human reference genome (\textcolor{red}{GRCh37/hg19, ref}) using BWA with default parameters. We removed reads that were unmapped or that had low mapping quality after alignment using Picard (\textcolor{red}{ref}) and BamTools (\textcolor{red}{ref}). 
 
-\textcolor{red}{Cut this paragraph?} After performing local realignment around indels with GATK (\textcolor{red}{ref}), we identified SNPs and short indels using SAMtools mpileup and BCFtools (\textcolor{red}{ref}). We required a minimum coverage of 3 reads and a maximum of 100 to call a SNP or an indel at a given location. We tallied orthologous SNPs using VCFtools (\textcolor{red}{ref}).
+After performing local realignment around indels with GATK (\textcolor{red}{ref}), we identified SNPs and short indels using SAMtools mpileup and BCFtools (\textcolor{red}{ref}). We required a minimum coverage of 3 reads and a maximum of 100 to call a SNP or an indel at a given location. We tallied orthologous SNPs using VCFtools (\textcolor{red}{ref}).
 	
 To assess how many restriction sites were successfully sequenced and to analyze the degree of overlap between multiplexed individual's datasets, we first found all possible \emph{PspXI} cut sites in the human genome using the oligoMatch utility in the USCS Genome Browser program (\textcolor{red}{ref}). This allowed us to calculate the coverage of these restriction site-associated regions using BEDtools' multiBamCov program (\textcolor{red}{ref}).
 
 \section{Results}
 
-% 3804227030 bp total (12,983,710 pairs of reads * (142bp + 151bp). This includes non-OWM taxa, remember.
-% OWM sequencing reads: 6,125,860 total, half that many pairs
-% Of those, 2029586 passed the filtration steps
-
-\_\_\_ million sequencing reads with an intact barcode and restriction enzyme cut site could be assigned confidently to one of the five primates in the present study. Roughly \_\_\_ million of those reads passed quality control filtration and \_\_\_ could be assigned to a stack. In these stacks our study identified \_\_\_ SNPs among all samples. Information for each individual is summarized in Table 1. 
+12.3 million sequencing reads with an intact barcode and restriction enzyme cut site could be assigned confidently to one of the five primates in the present study. Roughly 9.1 million of those reads passed quality control filtration and were clustered into stacks. By comparing these stacks and including only SNPs that were present in multiple individuals, our study identified 7,910 SNPs among all samples. Information for each individual is summarized in Table 1. 
 
 \begin{table}[h]
 \caption{Clustered Reads Data}
@@ -76,13 +70,12 @@ To assess how many restriction sites were successfully sequenced and to analyze 
 	\small
 	\begin{tabular}{ p{3cm} || l || p{1.75cm} | p{1.75cm} || p{1.75cm} | p{1.75cm} | l }
 		\hline
-		Taxon & Source & \# Reads & \# Filtered Reads & \# Stacks & Mean Coverage & \# SNPs \\ \hline\hline
-		\emph{Microcebus \textcolor{red}{murinus?}} & \textcolor{red}{Unknown} &  &  &  &  &  \\ \hline
-		\emph{Cebus \textcolor{red}{sp.?}} & \textcolor{red}{Unknown} &  &  &  &  &  \\ \hline
-		\emph{Theropithecus gelada} & \textcolor{red}{Unknown} &  &  &  &  &  \\ \hline
-		\emph{Pan troglodytes} & \textcolor{red}{Unknown} &  &  &  &  &  \\ \hline
-		\emph{Homo sapiens} & \textcolor{red}{Unknown} &  &  &  &  &  \\ \hline
-		\hline
+		Taxon                                  & Source                   & \# Reads & \# Filtered Reads & \# Ind. Stacks & Mean Coverage (SD)  & \# Shared SNPs \\ \hline\hline
+		\emph{Microcebus \textcolor{red}{sp?}} & \textcolor{red}{Unknown} &  2,830,832 & 2,025,103       & 248,324         &  7.66 (20.71)  & 13 \\ \hline
+		\emph{Cebus \textcolor{red}{sp.?}}     & \textcolor{red}{Unknown} &  1,946,096 & 1,427,413       & 107,829         & 12.64 (139.08) & 56 \\ \hline
+		\emph{Theropithecus gelada}            & \textcolor{red}{Unknown} &  1,918,425 & 1,392,709       & 136,657         &  9.70 (17.34)  & 212 \\ \hline
+		\emph{Pan troglodytes}                 & \textcolor{red}{Unknown} &  2,616,062 & 1,910,560       & 157,775         & 11.50 (42.27)  & 5,886 \\ \hline
+		\emph{Homo sapiens}                    & \textcolor{red}{Unknown} &  3,032,823 & 2,374,733       & 131,544         & 17.37 (25.30)  & 5,786 \\ \hline
 	\end{tabular}
 \end{center}
 \end{table}
@@ -96,25 +89,12 @@ In the human genome, we found \_\_\_ possible cut sites for \emph{PspXI} and \_\
 	\begin{tabular}{ p{3cm} || p{1.75cm} | p{1.75cm} || p{1.75cm} | p{1.75cm} | l }
 		\hline
 		Taxon & \# Reads & \# Filtered Reads & \# Loci $\ge 1$ Read & \# Loci $\ge 3$ Reads & \# SNPs \\ \hline\hline
-		\emph{Pan troglodytes} &  &  &  &  &  \\ \hline
-		\emph{Homo sapiens} &  &  &  &  &  \\ \hline
-		\hline
+		\emph{Pan troglodytes} & 2,616,062 &  &  &  &  \\ \hline
+		\emph{Homo sapiens}    & 3,032,823 &  &  &  &  \\ \hline
 	\end{tabular}
 \end{center}
 \end{table}
 
-
-%\begin{itemize}
-%	\item Pairwise comparisons between individuals? Like X orthologous regions shared between Papio and Thero?
-%\end{itemize}
-%
-%%\includegraphics{figs/seq_site_coverage_by_ind}
-%
-%\begin{itemize}
-%	\item SNP info from merged analysis
-%	\item SNP Venn diagram?
-%	\item Count orthologous SNPs shared between individuals. Pairwise?
-%\end{itemize}
 
 \section{Discussion}
 
@@ -132,6 +112,8 @@ RADseq is viable tool for researcher interested in primate phylogenetics, pop. g
 Changing the restriction enzyme to a more or less frequent cutter allows fine grained control over the number of loci, number of individuals multiplexed, and depth of coverage, allowing researchers to tailor marker discovery to their hypothesis. 
 
 Potential problems with RADseq method including the phylogenetic distance and the need of high quality DNA (at least for now)
+
+RADseq is shitty when phylogenetic distances are great. Works much better within a genus or species level. We managed to infer the accepted primate phylogeny from our SNP data using maximum likelihood approach, but the support values were crap
 
 ddRADseq
 
