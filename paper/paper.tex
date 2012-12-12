@@ -24,27 +24,23 @@
 
 \section{Introduction}
 
-During the first decades of molecular primatology, a formidable impediment to researchers was the need to develop and type polymorphic markers in a taxon of interest. The markers that resulted from this tedious and expensive task were often uninformative when applied outside of the population used in their design, necessitating further rounds of primer design or microsatellite assays, for example (Davey et al., 2011). Due to the bottleneck of marker discovery, many population genetic or phylogenetic studies in molecular primatology have been based on one or few loci (\textcolor{red}{Ting and Sterner, published yet?}). Such inferences can reliably give the evolutionary history of those particular regions of the genome, but they fail to adequately capture the complete complex history of the population given the mosaic nature of genomic evolution (\textcolor{red}{some gene-tree species tree review ref}). Adequate resolution depends on high marker density, and until recently that goal has been out of reach for many primate researchers.
+[What is mol. primatology? Explain importance of developing markers across taxa in order to study primates at different levels (population, phylogeography, phylogenetics)] During the first decades of molecular primatology, an impediment to researchers was the need to develop and type polymorphic markers in a taxon of interest. The markers that resulted from this time-consuming and expensive task were often uninformative when applied outside of the population used in their design, necessitating further rounds of primer design or microsatellite assays, for example (Davey et al., 2011). \textcolor{red}{Due to the bottleneck of marker discovery}, many population genetic or phylogenetic studies in molecular primatology have been based on one or few loci, usually mitochondrial DNA or few microsatellites (\textcolor{red}{Ting and Sterner, 2012}). Such inferences can reliably give the evolutionary history of those particular regions of the genome, but they fail to adequately capture the complete complex history of the population given the mosaic nature of genomic evolution (Degnan and Rosenberg, 2009; Maddison, 1997; Edwards, 2009; Maddison and Knowles, 2006). Adequate resolution depends on high marker density, and until recently that goal has been out of reach for many primate researchers (Edwards, 2009).
 
-The rapidly decreasing costs of DNA sequencing technology have promised revolutionary gains for primatology (\textcolor{red}{Enard and Paabo 2004, maybe? Goodman et al 2005?}). A primate researcher benefits from the many nearby sequenced and assembled reference genomes in the order, but genomic studies of non-model organisms nevertheless remain difficult. Though the cost of low coverage whole genome sequencing has fallen to a level feasible for many researchers' budgets, sequencing whole genomes for the tens or hundreds of individuals desired in a typical population genetic study is often prohibitively expensive and quite possibly superfluous. 
-
-Fortunately, researchers have recently developed techniques that reduce the complexity of the genome and allow discovery and typing of thousands or tens of thousands of genome-wide makers in many individuals in a single step. RAD-seq is one such simple, inexpensive reduced representation technique which allows for the sequencing of small fragments of the genome adjacent to restriction enzyme cut sites (Baird et al., 2008). These RAD tags, or restriction-site association DNA tags, were originally developed for use in microarray hybridization typing (Miller et al., 2007), but an updated protocol substitutes second-generation DNA sequencing to rapidly discover and type SNPs (Baird et al., 2008). The lack of reliance on a reference genome and applicability to datasets of many individuals make it a promising technique for phylogenetic or population genetic studies in non-model organisms, such as many primates.
+The rapidly decreasing costs of DNA sequencing technology have promised revolutionary gains for primatology (Enard and Paabo 2004; Goodman et al 2005; Ting and Sterner, 2012). A primate researcher benefits from the many nearby sequenced and assembled reference genomes in the order, but genomic studies of non-model organisms nevertheless remain difficult. Though the cost of whole genome sequencing has fallen to a level feasible for many researchers' budgets (e.g., Perry et al., 2012), sequencing whole genomes for the tens or hundreds of individuals desired in a typical population genetic study is often prohibitively expensive and quite possibly superfluous (McCormack, et al. 2012). Fortunately, researchers have recently developed techniques that reduce the complexity of the genome and allow discovery and typing of thousands or tens of thousands of genome-wide makers in many individuals in a single step (Davey et al., 2011; McCormack, et al. 2012). RAD-seq is one such simple, inexpensive reduced representation technique which allows for the sequencing of small fragments of the genome adjacent to restriction enzyme cut sites (Baird et al., 2008). These RAD tags, or restriction-site association DNA tags, were originally developed for use in microarray hybridization typing (Miller et al., 2007), but an updated protocol substitutes second-generation DNA sequencing to rapidly discover and type SNPs (Baird et al., 2008; Etter et al., 2011). The lack of reliance on a reference genome and applicability to datasets of many individuals make it a promising technique for phylogenetic or population genetic studies in non-model organisms, such as many primates.
 
 In the present study, we summarize the RAD-seq method in brief and note the many and varied applications since its development. We go on to discuss reasons that make RAD-seq promising for primatologists, and then demonstrate the technique in 5 primates: a lemur, New World monkey, Old World monkey, and two apes.  
 
 \subsection{The RAD-seq Technique}
 
-The following is a summary of the RAD tag library preparation of Etter et al., 2011 (\textcolor{red}{Fig. 1}). The RAD-seq library preparation begins when genomic DNA from multiple individuals is digested with a restriction enzyme, such as \emph{EcoRI} or \emph{PspXI}. The P1 adapter is then ligated to the fragments, connected to the sticky end at the restriction enzyme cut site. The P1 adapter contains an amplification site for PCR, an Illumina sequencing priming site, and an individual-specific barcode of five basepairs. Once the barcode has been added, fragments from multiple individuals can be pooled, and the DNA is randomly sheared with a sonicator to have a length distribution under 1 kilobase. To select for reads that are suitable for sequencing on the Illumina platform, the sheared samples are size selected via agarose gel electrophoresis, extracting fragments between 300 and 500 bp in length. The second adapter, P2, is a Y adapter meaning its two halves are complementary for only part of their length. It is ligated to the fragments and then the fragments are amplified via PCR. Because the second adapter has divergent ends, the reverse amplification primer is unable to bind until after the forward amplification primer has filled in its complementary sequence. This ensures that only RAD tags ligated to P1 are able to amplify. After few cycles of PCR to minimize the risk of introducing PCR artifacts or biases, the library is ready for final clean-up, quality control, and sequencing.
+The following is a summary of the RAD tag library preparation of Etter et al., 2011 (\textcolor{red}{Fig. 1}). The RAD-seq library preparation begins when genomic DNA from multiple individuals is digested with a restriction enzyme, such as \emph{EcoRI} or \emph{PspXI} (1a). The P1 adapter is then ligated to the fragments, connected to the sticky end at the restriction enzyme cut site. The P1 adapter contains an amplification site for PCR, an Illumina sequencing priming site, and an individual-specific barcode of five basepairs (1b). Once the barcode has been added, fragments from multiple individuals can be pooled, and the DNA is randomly sheared with a sonicator to have a length distribution under 1 kilobase (1c). To select for reads that are suitable for sequencing on the Illumina platform, the sheared samples are size selected via agarose gel electrophoresis, extracting fragments between 300 and 500 bp in length. The second adapter, P2, is a Y adapter meaning its two halves are complementary for only part of their length (1d). It is ligated to the fragments and then the fragments are amplified via PCR (1e). Because the second adapter has divergent ends, the reverse amplification primer is unable to bind until after the forward amplification primer has filled in its complementary sequence. This ensures that only RAD tags ligated to P1 are able to amplify. After few cycles of PCR to minimize the risk of introducing PCR artifacts or biases, the library is ready for final clean-up, quality control, and sequencing.
 
 \subsection{Previous RAD-seq Studies}
 
-\textcolor{red}{[Previous RADseq studies. Focus on pop gen, phylogeny studies]}
+Restriction site-associated DNA Sequencing (RAD-Seq) is an economical and efficient method for SNP discovery and genotyping. Since its first application by Baird and colleagues (2008) on two model organisms – the fungus \emph{Neurospora crassa} and the three-spined stickleback, \emph{Gasterosteus aculeatus} – RAD-seq has been successfully applied to several organisms for which reference genome information was not available. 
 
-\subsection{Prospective Primate Applications}
+The ability of RAD-seq technology to identify thousands of orthologous SNPs across multiple individuals at both intra- and interspecific level makes this technique extremely promising for the study of population structure (Hohenlohe et al., 2010; Emerson et al., 2010; Keller et al., 2012), gene flow and hybridization (Hohenlohe et al., 2011; Keller et al., 2012), phylogeography (Emerson et al., 2010) and phylogeny (Wagner et al., 2012; Rubin et al., 2012). The RAD-tag sequencing approach has been particularly used to generate SNP data to address questions in population genomics. For example, a series of studies conducted by Hohenlohe and colleagues investigated parallel adaptation and hybridization in several species of fish (Hohenlohe et al. 2010, 2011, 2012), while Emerson et al (2010) identified more than 3,700 SNPs for pitcher plant mosquitoes in eastern North America to provide the first phylogeographic study using RAD sequence data. 
 
-\textcolor{red}{[Why it would be good in primates.]}
-
-Changing the restriction enzyme to a more or less frequent cutter allows fine grained control over the number of loci, number of individuals multiplexed, and depth of coverage, allowing researchers to tailor marker discovery to their hypothesis. 
+Although RAD sequencing is more effective in addressing questions at or below the level of a single species, a few recent studies have used this technique in the analysis of phylogenetic questions. Rubin et al (2012) provided a simulation study in which they investigated the accuracy of RAD-seq data to reconstruct phylogenies in organisms with different population sizes and clade ages (\emph{Drosophila}, mammals, and yeasts). In their study the authors supported the efficiency of RAD-seq data in inferring phylogenies, but they also caution about how this approach achieves the best results in younger clades where more orthologous restriction sites are likely to be retained across species. This simulation analysis was confirmed in two recent empirical studies in which a RAD-tag sequencing approach was successfully used to reconstruct phylogenetic relationships in two recent but speciose radiation, such as the African cyclids (Wagner et al., 2012) and the \emph{Heliconius} butterﬂies (Nadeau et al., 2012).
 
 \section{Methods}
 
@@ -121,20 +117,23 @@ In the human genome, we found \_\_\_ possible cut sites for \emph{PspXI} and \_\
 %\end{itemize}
 
 \section{Discussion}
-\textcolor{red}{
+
+\textcolor{red}{[Why it would be good in primates.]}
+
+RADseq is viable tool for researcher interested in primate phylogenetics, pop. gen.
+
 \begin{itemize}
-	\item RADseq is viable tool for researcher interested in primate phylogenetics, pop. gen.
-	\begin{itemize}
-		\item Cheap and easy to create libraries. Competent lab can do it in two days. (Ha!)
-		\item Multiplexing is great for pop gen studies.
-		\item Enzyme choice allows control over coverage, number of individuals, number of loci.
-		\item Baird: "different marker densities can be attained by choice of restriction enzyme"
-	\end{itemize}
-	\item Potential problems with RADseq method
-	\item ddRADseq
-	\item Promise for primatology
+	\item Cheap and easy to create libraries. Competent lab can do it in two days. (Ha!)
+	\item Multiplexing is great for pop gen studies.
+	\item Enzyme choice allows control over coverage, number of individuals, number of loci.
+	\item Baird: "different marker densities can be attained by choice of restriction enzyme"
 \end{itemize}
-}
+	
+Changing the restriction enzyme to a more or less frequent cutter allows fine grained control over the number of loci, number of individuals multiplexed, and depth of coverage, allowing researchers to tailor marker discovery to their hypothesis. 
+
+Potential problems with RADseq method including the phylogenetic distance and the need of high quality DNA (at least for now)
+
+ddRADseq
 
 \section{Acknowledgements}
 \begin{itemize}
