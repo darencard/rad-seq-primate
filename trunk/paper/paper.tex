@@ -32,7 +32,7 @@ In the present study, we summarize the RAD-seq method in brief and note the many
 
 \subsection{The RAD-seq Technique}
 
-The following is a summary of the RAD tag library preparation protocol of Etter et al., 2011 (\textcolor{red}{Fig. 1}). The RAD-seq library preparation begins when genomic DNA is digested with a restriction enzyme, such as \emph{EcoRI} or \emph{PspXI} (1a). The P1 adapter is then ligated to the fragments, connected to the sticky end at the restriction enzyme cut site. The P1 adapter contains an amplification site for PCR, an Illumina sequencing priming site, and an individual-specific barcode of five basepairs (1b). Once the barcode has been added, fragments from multiple individuals can be pooled, and the DNA is randomly sheared with a sonicator to have a length distribution under 1 kilobase (1c). To select for reads that are suitable for sequencing on the Illumina platform, the sheared samples are size selected via agarose gel electrophoresis, extracting fragments between 300 and 500 bp in length. The second adapter, P2, is a Y adapter meaning its two halves are complementary for only part of their length (1d). It is ligated to the fragments and then the fragments are amplified via PCR (1e). Because the second adapter has divergent ends, the reverse amplification primer is unable to bind until after the forward amplification primer has filled in its complementary sequence. This ensures that only RAD tags ligated to P1 are able to amplify. After few cycles of PCR to minimize the risk of introducing PCR artifacts or biases, the library is ready for final clean-up, quality control, and sequencing.
+The following is a summary of the RAD tag library preparation protocol of Etter et al., 2011 (Fig. 1). The RAD-seq library preparation begins when genomic DNA is digested with a restriction enzyme, such as \emph{EcoRI} or \emph{PspXI} (1A). The P1 adapter is then ligated to the fragments, connected to the sticky end at the restriction enzyme cut site. The P1 adapter contains an amplification site for PCR, an Illumina sequencing priming site, and an individual-specific barcode of five basepairs (1B). Once the barcode has been added, fragments from multiple individuals can be pooled (1C), and the DNA is randomly sheared with a sonicator to have a length distribution under 1 kilobase (1D). To select for reads that are suitable for sequencing on the Illumina platform, the sheared samples are size selected via agarose gel electrophoresis, extracting fragments between 300 and 500 bp in length. The second adapter, P2, is a Y adapter meaning its two halves are complementary for only part of their length (1E). It is ligated to the fragments and then the fragments are amplified via PCR (1F). Because the second adapter has divergent ends, the reverse amplification primer is unable to bind until after the forward amplification primer has filled in its complementary sequence. This ensures that only RAD tags ligated to P1 are able to amplify. After few cycles of PCR to minimize the risk of introducing PCR artifacts or biases, the library is ready for final clean-up, quality control, and sequencing.
 
 \subsection{Previous RAD-seq Studies}
 
@@ -46,19 +46,19 @@ Although RAD sequencing is more effective in addressing questions at or below th
 
 \paragraph{Library Preparation and Sequencing}
 
-	We digested genomic DNA from 5 primates with \emph{PspXI} (New England Biolabs) and used it to create a multiplexed RAD tag library. Our library preparation method followed that of Etter et al, 2011 with the following modifications: the P1 adapter top\textcolor{red}{(?)} oligonucleotide was modified to have an overhang corresponding to the cut site of \emph{PspXI}, and a longer P2 adapter suitable for paired end sequencing was used (P2\_top: 5'-\textcolor{red}{SEQUENCEHERE}-3'; P2\_bottom: 5'-\textcolor{red}{SEQUENCEHERE}-3'). Individual-specific barcodes contained in the P1 adapter differed by at least \textcolor{red}{three} nucleotides. We chose \emph{PspXI} based on the results of \emph{in silico} digestion of the human, rhesus macaque, and baboon reference genomes using custom Perl scripts (\textcolor{red}{refs}). We sequenced the prepared library as one 150-cycle paired-end run of an Illumina MiSeq at the NYU Langone Medical Center's Genome Technology Center using a spike-in of 30\% PhiX DNA to control for low diversity in the library at the barcode and restriction sites. Other individuals were sequenced alongside those of the present study. Sequences are available to download from the NCBI Short Read Archive (accession number \textcolor{red}{SRAXXXXXX.X}).
+	We digested genomic DNA from 5 primates with \emph{PspXI} (New England Biolabs) and used it to create a multiplexed RAD tag library. Our library preparation method followed that of Etter et al, 2011 with the following modifications: the P1 adapter top\textcolor{red}{(?)} oligonucleotide was modified to have an overhang corresponding to the cut site of \emph{PspXI}, and a longer P2 adapter suitable for paired end sequencing was used (P2\_top: 5'-\textcolor{red}{SEQUENCEHERE}-3'; P2\_bottom: 5'-\textcolor{red}{SEQUENCEHERE}-3'). Individual-specific barcodes contained in the P1 adapter differed by at least \textcolor{red}{three} nucleotides. We chose \emph{PspXI} based on the results of \emph{in silico} digestion of the human, rhesus macaque, and baboon reference genomes using custom Perl scripts. We sequenced the prepared library as one 150-cycle paired-end run and one 150-cycle single-end run of an Illumina MiSeq at the NYU Langone Medical Center's Genome Technology Center using a spike-in of 30\% PhiX DNA to control for low diversity in the library at the barcode and restriction sites. Other individuals were sequenced alongside those of the present study. Sequences are available to download from the NCBI Short Read Archive (accession number \textcolor{red}{SRAXXXXXX.X}).
 
 \paragraph{Sequence Analysis - Clustering and SNP Discovery}
 
-We demultiplexed, or separated by barcode, sequence reads and excluded from the analysis reads without an expected barcode or an intact restriction enzyme cut site. We also removed reads with any quality scores below 10. Using the program Stacks, we clustered all reads into sets that differed by no more than two basepairs and compared closely related sets to detect orthologous loci and SNPs using a maximum likelihood approach (\textcolor{red}{Stacks ref}). We tallied orthologous SNPs using VCFtools (\textcolor{red}{ref}).
+As input for the clustering analysis, we combined the first read of the paired-end run and the single-end run reads. We demultiplexed, or separated by barcode, sequence reads and excluded from the analysis reads without an expected barcode or an intact restriction enzyme cut site. We also removed reads with any quality scores below 10. Using the program Stacks, we clustered all reads into sets that differed by no more than two basepairs and compared closely related sets to detect orthologous loci and SNPs using a maximum likelihood approach (Catchen et al., 2011). We tallied orthologous SNPs using VCFtools (Danecek et al., 2011).
 
 \paragraph{Sequence Analysis - Assess RAD Tag Coverage}
 
-To assess the RAD tag coverage, we mapped human and chimpanzee reads to the highest quality primate reference genome, that of humans. Again, we excluded reads without an expected barcode or an intact restriction enzyme cut site. We aligned reads to the human reference genome (\textcolor{red}{GRCh37/hg19, ref}) using BWA with default parameters. We removed reads that were unmapped or that had low mapping quality after alignment using Picard (\textcolor{red}{ref}) and BamTools (\textcolor{red}{ref}). 
+To assess the RAD tag coverage, we mapped human and chimpanzee reads to the highest quality primate reference genome, that of humans. Again, we excluded reads without an expected barcode or an intact restriction enzyme cut site. We aligned reads to the human reference genome (GRCh37/hg19, Human Genome Consortium 2001) using BWA with default parameters (Li and Durbin, 2009). We separately mapped the single-end and paired-end data and then combined the resultant files after alignment. We removed reads that were unmapped or that had low mapping quality using Picard (http://picard.sourceforge.net) and BamTools (Barnett et al., 2011). 
 
-After performing local realignment around indels with GATK (\textcolor{red}{ref}), we identified SNPs and short indels using SAMtools mpileup and BCFtools (\textcolor{red}{ref}). We required a minimum coverage of 3 reads and a maximum of 100 to call a SNP or an indel at a given location. We tallied orthologous SNPs using VCFtools (\textcolor{red}{ref}).
+After performing local realignment around indels with GATK (DePristo et al., 2011), we identified SNPs and short indels using SAMtools mpileup and BCFtools (Li et al., 2009). We required a minimum coverage of 3 reads and a maximum of 100 to call a SNP or an indel at a given location. We tallied orthologous SNPs using VCFtools (Danecek et al., 2011).
 	
-To assess how many restriction sites were successfully sequenced and to analyze the degree of overlap between multiplexed individual's datasets, we first found all possible \emph{PspXI} cut sites in the human genome using the oligoMatch utility in the USCS Genome Browser program and created a BED file of all regions 1000 upstream and downstream. (\textcolor{red}{ref}). This allowed us to calculate the coverage of these restriction site-associated regions using BEDtools' multiBamCov program (\textcolor{red}{ref}).
+To assess how many restriction sites were successfully sequenced and to analyze the degree of overlap between multiplexed individual's datasets, we first found all possible \emph{PspXI} cut sites in the human genome using the oligoMatch utility in the USCS Genome Browser program and created a BED file of all regions 1000 basepairs upstream and downstream. (Meyer et al., 2012). This allowed us to calculate the coverage of these restriction site-associated regions using BEDtools' multiBamCov program (Quinlan and Hall 2010).
 
 \section{Results}
 
@@ -70,17 +70,17 @@ To assess how many restriction sites were successfully sequenced and to analyze 
 	\small
 	\begin{tabular}{ p{3cm} || l || p{1.75cm} | p{1.75cm} || p{1.75cm} | p{1.75cm} | l }
 		\hline
-		Taxon                                  & Source                   & \# Reads & \# Filtered Reads & \# Ind. Stacks & Mean Coverage (SD)  & \# Shared SNPs \\ \hline\hline
-		\emph{Microcebus \textcolor{red}{sp?}} & \textcolor{red}{Unknown} &  2,830,832 & 2,025,103       & 248,324         &  7.66 (20.71)  & 13 \\ \hline
-		\emph{Cebus \textcolor{red}{sp.?}}     & \textcolor{red}{Unknown} &  1,946,096 & 1,427,413       & 107,829         & 12.64 (139.08) & 56 \\ \hline
-		\emph{Theropithecus gelada}            & \textcolor{red}{Unknown} &  1,918,425 & 1,392,709       & 136,657         &  9.70 (17.34)  & 212 \\ \hline
-		\emph{Pan troglodytes}                 & \textcolor{red}{Unknown} &  2,616,062 & 1,910,560       & 157,775         & 11.50 (42.27)  & 5,886 \\ \hline
-		\emph{Homo sapiens}                    & \textcolor{red}{Unknown} &  3,032,823 & 2,374,733       & 131,544         & 17.37 (25.30)  & 5,786 \\ \hline
+		Taxon                       & \# Reads  & \# Filtered Reads & \# Ind. Stacks & Mean Coverage (SD)  & \# Shared SNPs \\ \hline\hline
+		\emph{Microcebus sp.}       & 2,830,832 & 2,025,103       & 248,324         &  7.66 (20.71)  & 13    \\ \hline
+		\emph{Cebus sp.}            & 1,946,096 & 1,427,413       & 107,829         & 12.64 (139.08) & 56    \\ \hline
+		\emph{Theropithecus gelada} & 1,918,425 & 1,392,709       & 136,657         &  9.70 (17.34)  & 212   \\ \hline
+		\emph{Pan troglodytes}      & 2,616,062 & 1,910,560       & 157,775         & 11.50 (42.27)  & 5,886 \\ \hline
+		\emph{Homo sapiens}         & 3,032,823 & 2,374,733       & 131,544         & 17.37 (25.30)  & 5,786 \\ \hline
 	\end{tabular}
 \end{center}
 \end{table}
 
-In the human genome, we found 58,172 possible cut sites for \emph{PspXI} and 116,344 possible sequencing sites (two per cut site, one upstream and one downstream). Of those, \_\_\_ sites (\_\_\_\%) were covered by at least one read in human and \_\_\_ sites (\%) in chimpanzee. For \_\_\_ sites (\_\_\%), both chimpanzee and human had at least one read. When we restrict the analysis to sites with at least three reads, \_\_\_ sites (\_\_\_\%) were covered in human, \_\_\_ sites (\_\_\_\%) were covered in chimpanzee, and \_\_\_ sites (\_\_\_\%) in both.
+In the human genome, we found 58,172 possible cut sites for \emph{PspXI} and 116,344 possible sequencing sites (two per cut site, one upstream and one downstream). Of those possible location, 111,686 sites (96.00\%) had at least one mapped read present in human and 91,646 sites (78.77\%) in chimpanzee. For 90,022 sites (77.38\%), both chimpanzee and human had at least one read. When we restrict the analysis to sites with at least three reads, 109,098 sites (93.77\%) had sequences in human, 89,628 sites (77.04\%) in chimpanzee, and 86,604 sites (74.44\%) in both. From this data, we found 9,275 SNPs relative to the human reference genome that were present in both chimpanzee and human datasets.
 
 \begin{table}[h]
 \caption{Mapped Reads Data}
@@ -88,9 +88,9 @@ In the human genome, we found 58,172 possible cut sites for \emph{PspXI} and 116
 	\small
 	\begin{tabular}{ p{3cm} || p{1.75cm} | p{1.75cm} || p{1.75cm} | p{1.75cm} | l }
 		\hline
-		Taxon & \# Reads & \# Filtered Reads & \# Loci $\ge 1$ Read & \# Loci $\ge 3$ Reads & \# SNPs \\ \hline\hline
-		\emph{Pan troglodytes} & 2,616,062 &  &  &  &  \\ \hline
-		\emph{Homo sapiens}    & 3,032,823 &  &  &  &  \\ \hline
+		Taxon                  & \# Reads  & \# Filtered Reads & \# Loci $\ge 1$ Read & \# Loci $\ge 3$ Reads & \# SNPs \\ \hline\hline
+		\emph{Pan troglodytes} & 3,917,046 & 2,826,643           &  91,646              &  89,628               & 309,703 \\ \hline
+		\emph{Homo sapiens}    & 4,542,978 & 3,784,192           & 111,686              & 109,098               &  35,651 \\ \hline
 	\end{tabular}
 \end{center}
 \end{table}
