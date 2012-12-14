@@ -46,12 +46,18 @@ pre_aln_analysis_steps : fastqc
 alignment_steps : align sampe samse sam2bam sort_and_index_bam merge_bam get_alignment_stats
 post_alignment_filtering_steps : fix_mate_pairs filter_unmapped remove_dups add_read_groups filter_bad_qual
 snp_calling_steps : local_realign_targets local_realign call_snps filter_snps get_snp_stats #call_consensus
+# ---
+merge_vcfs : results/merged.flt.vcf
+get_merged_snp_stats : results/merged.flt.vcf.stats.txt
+# VCF to tab
+# tab to FASTA
+# Fasta to NEXUS and PHYLIP
 
 # Steps for individuals
 indiv : preliminary_steps pre_aln_analysis_steps alignment_steps post_alignment_filtering_steps snp_calling_steps 
 
 # Steps for group
-# compare : 
+compare : merge_vcfs get_merged_snp_stats
 
 # Hack to be able to export Make variables to child scripts
 # Don't export variables from make that begin with non-alphanumeric character
@@ -179,7 +185,7 @@ results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_I
 # -------------------------------------------------------------------------------------- #
 
 # Merged BAM file [index] depends on input PE and input SE BAMs, SAMtools, and scripts/merge_bam.sh
-results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam ${SAMTOOLS}/* #scripts/merge_bam.sh
+results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai ${SAMTOOLS}/* #scripts/merge_bam.sh
 	@echo "# === Merging SE and PE BAM files ========================== #";
 	${SHELL_EXPORT} ./scripts/merge_bam.sh ${GENOME_NAME}
 	${SHELL_EXPORT} ./scripts/index_bam.sh results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam;
@@ -189,7 +195,7 @@ results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${I
 # -------------------------------------------------------------------------------------- #
 
 # Align stats report depends on the sorted BAM and scripts/get_alignment_stats.sh
-reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam #scripts/get_alignment_stats.sh
+reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai #scripts/get_alignment_stats.sh
 	@echo "# === Analyzing alignment output ============================= #";
 	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt	
 
@@ -209,9 +215,9 @@ results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam : results/${IND_ID}_MERGED.bwa.${
 	${SHELL_EXPORT} ./scripts/fix_mate_pairs.sh ${GENOME_NAME};
 
 # Align stats report depends on the BAM with fixed mate pair info and scripts/get_alignment_stats.sh
-reports/${IND_ID}.bwa.${GENOME_NAME}_MERGED.aln_stats.pairsfix.txt : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam #scripts/get_alignment_stats.sh
+reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.txt : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam #scripts/get_alignment_stats.sh
 	@echo "# === Analyzing alignment output (post mate pair fix) ======== #";
-	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam reports/${IND_ID}.bwa.${GENOME_NAME}_MERGED.aln_stats.pairsfix.txt;
+	${SHELL_EXPORT} ./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.txt;
 
 # -------------------------------------------------------------------------------------- #
 # --- Filtering for mapped
@@ -278,7 +284,7 @@ reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.passed.txt : results/${IND_ID}.bw
 # -------------------------------------------------------------------------------------- #
 
 # List of intervals to realign depends on BAM of reads that passed filtering, GATK, and scripts/local_realign_get_targets.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam ${GATK}/* #scripts/local_realign.sh
+results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai ${GATK}/* #scripts/local_realign.sh
 	@echo "# === Identifying intervals in need or local realignment ===== #";
 	${SHELL_EXPORT} ./scripts/local_realign_get_targets.sh ${GENOME_NAME} ${GENOME_FA};
 
@@ -287,7 +293,7 @@ results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list : results/${IND_ID}.bwa.${G
 # -------------------------------------------------------------------------------------- #
 
 # Realigned BAM depends on list of realign targets, BAM of reads that passed filtering, GATK, and scripts/local_realign.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam ${GATK}/* #scripts/local_realign.sh
+results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai ${GATK}/* #scripts/local_realign.sh
 	@echo "# === Doing local realignment ================================ #";
 	${SHELL_EXPORT} ./scripts/local_realign.sh ${GENOME_NAME} ${GENOME_FA};
 
@@ -355,3 +361,6 @@ results/merged.flt.vcf : results/*.bwa.${GENOME_NAME}.passed.realn.flt.vcf ${VCF
 results/merged.flt.vcf.stats.txt : results/merged.flt.vcf ${VCFTOOLS}/* #scripts/get_snp_stats.sh
 	@echo "# === Getting basic SNPs stats =============================== #";
 	${SHELL_EXPORT} ./scripts/get_snp_stats.sh results/merged.flt.vcf;
+
+
+# Also count restriction enzyme script

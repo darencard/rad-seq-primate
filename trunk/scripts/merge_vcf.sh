@@ -6,7 +6,7 @@
 
 export PATH=$PATH:$TABIX
 
-ALL_VCF_GZ=$(ls results/*.bwa.rhesus.passed.realn.bam.RG.flt.vcf.gz)
+ALL_VCF_GZ=$(ls results/*.bwa.${GENOME_NAME}.passed.realn.flt.vcf.gz)
 
 ${VCFTOOLS}/vcf-merge \
 	${ALL_VCF_GZ} \

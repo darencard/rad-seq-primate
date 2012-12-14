@@ -9,7 +9,7 @@
 # -------------------------------------------------------------------------------------- #
 
 # Individual ID (used to name files)
-IND_ID=CTA
+IND_ID=P_trog
 
 # Paths to input reads files
 # Must be in FASTQ format
@@ -19,10 +19,10 @@ READ_SE=./data/${IND_ID}_SE.fastq
 
 # Paths to genomes files
 # Must be in FASTA format
-GENOME_FA=../xspecies-exome/genomes/rheMac2/rheMac2.fa
+GENOME_FA=../xspecies-exome/genomes/hg19/hg19.fa
 
 # Common name of genome (used to name files)
-GENOME_NAME=rhesus
+GENOME_NAME=human
 
 # -------------------------------------------------------------------------------------- #
 # --- Paths to external programs

@@ -10,9 +10,9 @@ use lib '/home/cmb433/local_perl/';
 
 use Bio::AlignIO;
 
-my $in  = Bio::AlignIO->new(	-file   => "results/merged.align.fasta",
+my $in  = Bio::AlignIO->new(	-file   => "results/stacks/batch_1.align.fasta",
 								-format => "fasta");
-my $out = Bio::AlignIO->new(	-file => ">results/merged.align.phy",
+my $out = Bio::AlignIO->new(	-file => ">results/stacks/batch_1.align.phy",
 								-format => "phylip");
  
 while (my $aln = $in->next_aln) { 

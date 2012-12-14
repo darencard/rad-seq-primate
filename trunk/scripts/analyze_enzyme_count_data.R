@@ -1,8 +1,8 @@
 
 rad_counts=read.table("RAD_coverage.txt")
-names(rad_counts)=c("chr","start","end", "enz", "len", "str", "Allenopithecus", "Coast_langur", "CTA", "Mmulatta1", "Papio19349", "Tgelada871162")
+names(rad_counts)=c("chr","start","end", "enz", "len", "str", "H_sapiens", "P_trog")
 
-rad_counts_only = rad_counts[,7:12]
+rad_counts_only = rad_counts[,7:8]
 
 rad_present = rad_counts_only > 0
 rad_gt3     = rad_counts_only >= 3
@@ -10,23 +10,7 @@ rad_gt3     = rad_counts_only >= 3
 rad_sums = rowSums(rad_present)
 rad_sums_gt3 = rowSums(rad_gt3)
 
-#	length(rad_sums[rad_sums == 6]) # 13456
-#	length(rad_sums[rad_sums == 5]) # 23350
-#	length(rad_sums[rad_sums == 4]) # 22890
-#	length(rad_sums[rad_sums == 3]) # 18488
-#	length(rad_sums[rad_sums == 2]) # 12136
-#	length(rad_sums[rad_sums == 1]) # 10818
-#	length(rad_sums[rad_sums == 0]) # 7590
-#	
-#	length(rad_sums[rad_sums >= 6]) # 13456
-#	length(rad_sums[rad_sums >= 5]) # 36806
-#	length(rad_sums[rad_sums >= 4]) # 59696
-#	length(rad_sums[rad_sums >= 3]) # 78184
-#	length(rad_sums[rad_sums >= 2]) # 90320
-#	length(rad_sums[rad_sums >= 1]) # 101138
-#	length(rad_sums[rad_sums >= 0]) # 108728
-
-x = 0:6
+x = 0:2
 
 ### One or more reads --------------------------------------------------------------------
 

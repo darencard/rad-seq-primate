@@ -35,7 +35,8 @@ my %iupac = (
 			'./.' => '.',
 		);
 
-my $input_tab = "results/merged.flt.vcf.tab";
+#my $input_tab = "results/merged.flt.vcf.tab";
+my $input_tab = "results/stacks/batch_1.vcf.tab";
 
 open (TAB, "<$input_tab")
 	or die "ERROR: Could not open input file $input_tab.\n";
@@ -53,13 +54,13 @@ LINE: foreach my $line (<TAB>) {
 
 	my @data = split /\t/, $line;
 	
-	# Skip if this is indel (Length of @data will be less than 9)
-	if ((scalar @data) < 9) {
+	# Skip if this is indel (Length of @data will be less than 8)
+	if ((scalar @data) < 8) {
 		next LINE;
 	}
 	
 	# Skip if any basepairs are actually 2 or more together
-	for (my $i = 2; $i < 9; $i++) {
+	for (my $i = 2; $i < 8; $i++) {
 		
 		my $bp = $data[$i]; 
 		chomp $bp;
@@ -68,17 +69,34 @@ LINE: foreach my $line (<TAB>) {
 		}
 	}
 	
-	# Exclude heterozygotes. Keep only fixed SNPs
-	for (my $i = 2; $i < 9; $i++) {
-		
-		my $bp = $data[$i]; 
-		chomp $bp;
-		if ($bp =~ /(\w)\/(\w)/) {
-			if ($1 ne $2) {
-				next LINE;
-			}
-		}
-	}
+#		# Exclude heterozygotes. Keep only fixed SNPs
+#		for (my $i = 2; $i < 8; $i++) {
+#			
+#			my $bp = $data[$i]; 
+#			chomp $bp;
+#			if ($bp =~ /(\w)\/(\w)/) {
+#				if ($1 ne $2) {
+#					next LINE;
+#				}
+#			}
+#		}
+#		
+#		# Skip BPs with too much missing data
+#		my $required = 5;
+#	
+#		for (my $i = 2; $i < 8; $i++) {
+#	
+#			my $missing_count = 0;		
+#			my $bp = $data[$i]; 
+#			chomp $bp;
+#			if ($bp eq "./") {
+#				$missing_count++
+#			}
+#			
+#			if (6 - $missing_count < $required) {
+#				next LINE;
+#			}
+#		}
 	
 	# Otherwise write line to pure temporary file
 	print TEMP $line;
@@ -89,7 +107,7 @@ close TEMP;
 
 # Now convert cleaned tabular file to FASTA alignment
 
-for (my $i = 3; $i < 9; $i++) {
+for (my $i = 3; $i < 8; $i++) {
 
 	my $ind = $col_names[$i];
 	chomp $ind;
