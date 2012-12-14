@@ -1,0 +1,5 @@
+CTA_all	1
+Mmulatta1_all	2
+Papio19349_all	3
+Allenopithecus_all	4
+Tgelada871162_all	5
