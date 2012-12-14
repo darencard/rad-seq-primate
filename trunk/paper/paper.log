@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  13 DEC 2012 17:31
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  14 DEC 2012 12:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -220,6 +220,9 @@ Overfull \hbox (16.93591pt too wide) in paragraph at lines 71--80
  []
 
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
 Overfull \hbox (9.36964pt too wide) in paragraph at lines 89--95
  [] 
  []
@@ -227,37 +230,35 @@ Overfull \hbox (9.36964pt too wide) in paragraph at lines 89--95
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[6]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 106.
-
- (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 106.
- [7] [8]
-(./paper.aux) ) 
+[6] [7]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+ [8] [9] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
- 1306 strings out of 493747
- 18588 string characters out of 3143546
- 78049 words of memory out of 3000000
- 4608 multiletter control sequences out of 15000+200000
- 10367 words of font info for 36 fonts, out of 3000000 for 9000
+ 1287 strings out of 493747
+ 18255 string characters out of 3143546
+ 84049 words of memory out of 3000000
+ 4592 multiletter control sequences out of 15000+200000
+ 10110 words of font info for 35 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 37i,11n,23p,1685b,341s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmbx10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbx12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-17.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10
-.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.
-pfb>
-Output written on paper.pdf (8 pages, 128432 bytes).
+ 37i,11n,23p,2110b,341s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmbx12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr17.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmti12.pfb>
+Output written on paper.pdf (9 pages, 133417 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
- 44 compressed objects within 1 object stream
+ 66 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
