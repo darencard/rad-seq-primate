@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  14 DEC 2012 12:16
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  14 DEC 2012 14:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -227,9 +227,6 @@ Overfull \hbox (9.36964pt too wide) in paragraph at lines 89--95
  [] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 [6] [7]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
@@ -241,7 +238,7 @@ Missing character: There is no “ in font cmr12!
 Here is how much of TeX's memory you used:
  1287 strings out of 493747
  18255 string characters out of 3143546
- 84049 words of memory out of 3000000
+ 81049 words of memory out of 3000000
  4592 multiletter control sequences out of 15000+200000
  10110 words of font info for 35 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
@@ -255,7 +252,7 @@ ts/cm/cmr17.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmti12.pfb>
-Output written on paper.pdf (9 pages, 133417 bytes).
+Output written on paper.pdf (9 pages, 133154 bytes).
 PDF statistics:
  66 PDF objects out of 1000 (max. 8388607)
  46 compressed objects within 1 object stream
