@@ -10,5 +10,5 @@ ALL_BAM=$(ls results/*.passed.realn.bam)
 
 ${BEDTOOLS}/multiBamCov \
 	-bams	${ALL_BAM} \
-	-bed data/PspXI_rheMac2.bed \
+	-bed data/PspXI_hg19.bed \
 	> reports/RAD_coverage.txt

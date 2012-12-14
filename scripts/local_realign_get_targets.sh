@@ -17,6 +17,7 @@ GENOME_FA=$2
 echo "CMD: java -Xmx4g -jar ${GATK}/GenomeAnalysisTK.jar \
 	-T RealignerTargetCreator \
 	--filter_mismatching_base_and_quals \
+	--num_threads 8 \
 	-R ${GENOME_FA} \
 	-o results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam.list \
 	-I results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam";
@@ -24,6 +25,7 @@ echo "CMD: java -Xmx4g -jar ${GATK}/GenomeAnalysisTK.jar \
 java -Xmx4g -jar ${GATK}/GenomeAnalysisTK.jar \
 	-T RealignerTargetCreator \
 	--filter_mismatching_base_and_quals \
+	--num_threads 8 \
 	-R ${GENOME_FA} \
 	-o results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam.list \
 	-I results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam
