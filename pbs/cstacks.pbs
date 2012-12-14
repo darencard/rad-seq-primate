@@ -1,0 +1,57 @@
+#!/bin/bash
+
+#PBS -l nodes=1:ppn=12,walltime=2:00:00,mem=20GB
+#PBS -N cstacks
+#PBS -M cmb433@nyu.edu
+#PBS -m abe
+#PBS -e localhost:/scratch/cmb433/primate_RAD/${PBS_JOBNAME}.e${PBS_JOBID}
+#PBS -o localhost:/scratch/cmb433/primate_RAD/${PBS_JOBNAME}.o${PBS_JOBID}
+
+# ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
+
+export OMP_NUM_THREADS=12
+
+working_dir=/scratch/cmb433/primate_RAD
+
+# ------------------------------------------------------------------------------
+# Run stacks populations
+# ------------------------------------------------------------------------------
+
+cd $working_dir
+
+echo ">>> Starting stacks";
+
+#STACKS=/home/cmb433/exome_macaque/bin/stacks-0.9999/build/bin
+
+module load stacks/intel/0.9999;
+
+echo ">>> Starting cstacks" 1>&2;
+
+cstacks -b 1 \
+	-s all_primate/stacks/female12.CLEAN      -S 1 \
+	-s all_primate/stacks/Cebus.CLEAN         -S 2 \
+	-s all_primate/stacks/Tgelada871162.CLEAN -S 3 \
+	-s all_primate/stacks/P_trog.CLEAN        -S 4 \
+	-s all_primate/stacks/H_sapiens.CLEAN     -S 5 \
+	-o all_primate/stacks -p 12 -n 2
+
+echo ">>> Finished cstacks" 1>&2;
+
+# Compare samples back against catalog
+echo ">>> sstacks female12..." 1>&2;
+sstacks -b 1 -c all_primate/stacks/batch_1 -s all_primate/stacks/female12.CLEAN      -S 1 -o all_primate/stacks -p 12
+echo ">>> sstacks Cebus..." 1>&2;
+sstacks -b 1 -c all_primate/stacks/batch_1 -s all_primate/stacks/Cebus.CLEAN         -S 2 -o all_primate/stacks -p 12
+echo ">>> sstacks Tgelada871162..." 1>&2;
+sstacks -b 1 -c all_primate/stacks/batch_1 -s all_primate/stacks/Tgelada871162.CLEAN -S 3 -o all_primate/stacks -p 12
+echo ">>> sstacks P_trog..." 1>&2;
+sstacks -b 1 -c all_primate/stacks/batch_1 -s all_primate/stacks/P_trog.CLEAN        -S 4 -o all_primate/stacks -p 12
+echo ">>> sstacks H_sapiens..." 1>&2;
+sstacks -b 1 -c all_primate/stacks/batch_1 -s all_primate/stacks/H_sapiens.CLEAN     -S 5 -o all_primate/stacks -p 12
+
+
+echo ">>> Finished stacks";
+
+exit;
