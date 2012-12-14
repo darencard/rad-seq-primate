@@ -24,6 +24,9 @@ GENOME_FA=../xspecies-exome/genomes/hg19/hg19.fa
 # Common name of genome (used to name files)
 GENOME_NAME=human
 
+# BED file of RAD tag locations. This can be generated with the UCSC utility oligoMatch
+RAD_TAG_BED=./data/PspXI_hg19.bed
+
 # -------------------------------------------------------------------------------------- #
 # --- Paths to external programs
 # -------------------------------------------------------------------------------------- #
