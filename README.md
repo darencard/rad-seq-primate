@@ -5,7 +5,7 @@
 Here's the rough outline of how I used the scripts in this project to do the RADseq data analysis. It involves two main parts, the mapping analysis which uses BWA, and the clustering analysis which uses Stacks.
 
 * Put uncompressed FASTQ file in folder `data/`
-* Demultiplex reads with `scripts/demultiplex.sh` and/or `scripts/demultiplex\_SE.sh`
+* Demultiplex reads with `scripts/demultiplex.sh` and/or `scripts/demultiplex_SE.sh`
 * MAPPING ANALYSIS - INDIVIDUALS
     - For each individual:
         - Edit variables in `config.mk`, especially the variables in "Paths to input files"
@@ -14,9 +14,9 @@ Here's the rough outline of how I used the scripts in this project to do the RAD
         - Call the comparative analysis Makefile via the shell script by running `sh compare_analysis`
 * CLUSTERING ANALYSIS
     - This has never really been formalized into a Makefile. 
-    - `call\_stacks.sh` is kind of a rough outline of the Stacks pipeline. 
-    - `filter\_reads.sh` should be called first to filter out low quality reads
-    - `gather\_results.R` is a handy R script to pull data out of the output files of the Stacks run. 
+    - `call_stacks.sh` is kind of a rough outline of the Stacks pipeline. 
+    - `filter_reads.sh` should be called first to filter out low quality reads
+    - `gather_results.R` is a handy R script to pull data out of the output files of the Stacks run. 
     - `pbs/` contains PBS files for submitting jobs for the different parts of the Stacks analysis.
 
 ---
