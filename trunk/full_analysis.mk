@@ -8,7 +8,7 @@ include config.mk
 
 GENOME_DIR=$(dir ${GENOME_FA})
 
-# Output files of BWA index. None of these variables are exported since they begin with "_"
+# Output files of BWA index.
 _BWA_INDEX_ENDINGS = .amb .ann .bwt .pac .sa
 _PROTO_BWA_INDEX = $(addprefix ${GENOME_FA}, ${BWA_INDEX_ENDINGS})
 _BWA_INDEX = $(subst .fa,,${PROTO_BWA_INDEX})
@@ -17,13 +17,24 @@ _BWA_INDEX = $(subst .fa,,${PROTO_BWA_INDEX})
 # --- preliminary_steps
 index_genome : ${GENOME_FA}i ${_BWA_INDEX}
 # --- pre_aln_analysis_steps:
-fastqc : reports/${IND_ID}.read1.stats.zip reports/${IND_ID}.read2.stats.zip reports/${IND_ID}.readSE.stats.zip
+ifeq ($(READ_TYPE),SE)
+    fastqc : reports/${IND_ID}.readSE.stats.zip
+else ifeq ($(READ_TYPE),PE)
+    fastqc : reports/${IND_ID}.read1.stats.zip reports/${IND_ID}.read2.stats.zip
+endif
 # --- alignment_steps
-align : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai results/${IND_ID}.readSE.bwa.${GENOME_NAME}.sai
-sampe : results/${IND_ID}.bwa.${GENOME_NAME}.sam
-samse : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam
-sam2bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam
-sort_and_index_bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
+ifeq ($(READ_TYPE),SE)
+    align : results/${IND_ID}.readSE.bwa.${GENOME_NAME}.sai
+    sampe_or_samse : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam
+    sam2bam : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam
+    sort_and_index_bam : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
+else ifeq ($(READ_TYPE),PE)
+    align : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai
+    sampe_or_samse : results/${IND_ID}.bwa.${GENOME_NAME}.sam
+    sam2bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam
+    sort_and_index_bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
+endif
+
 merge_bam : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
 get_alignment_stats : reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt
 # --- post_alignment_filtering_steps
@@ -43,7 +54,7 @@ get_snp_stats : reports/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf.stats.
 # Group steps together
 preliminary_steps : index_genome
 pre_aln_analysis_steps : fastqc
-alignment_steps : align sampe samse sam2bam sort_and_index_bam merge_bam get_alignment_stats
+alignment_steps : align sampe_or_samse sam2bam sort_and_index_bam merge_bam get_alignment_stats
 post_alignment_filtering_steps : fix_mate_pairs filter_unmapped remove_dups add_read_groups filter_bad_qual
 snp_calling_steps : local_realign_targets local_realign call_snps filter_snps get_snp_stats #call_consensus
 # ---
@@ -123,7 +134,9 @@ results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai : ${BWA}/* ${READ1} ${READ2} ${GE
 	./scripts/align.sh ${GENOME_FA} ${GENOME_NAME};
 
 # Read 2 depends on read 1
-results/${IND_ID}.read2.bwa.${GENOME_NAME}.sai : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai
+ifeq ($(READ_TYPE),PE)
+    results/${IND_ID}.read2.bwa.${GENOME_NAME}.sai : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai
+endif
 
 # Align SE reads
 # Alignment output (*.sai) depends on bwa, the reads FASTAs, the genome (index), and alignSE.sh

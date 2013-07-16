@@ -12,14 +12,19 @@
 IND_ID=P_trog
 
 # Paths to input reads files
-# Must be in FASTQ format
+# Must be in FASTQ format and end in '.fastq'
+# FastQC will not name the output file properly if ending is '.fq'
 READ1=./data/${IND_ID}.read1.fastq
 READ2=./data/${IND_ID}.read2.fastq
 READ_SE=./data/${IND_ID}_SE.fastq
 
+# Paired-end or single-end analysis?
+# Must be either PE or SE
+READ_TYPE=PE
+
 # Paths to genomes files
 # Must be in FASTA format
-GENOME_FA=../xspecies-exome/genomes/hg19/hg19.fa
+GENOME_FA=genomes/hg19/hg19.fa
 
 # Common name of genome (used to name files)
 GENOME_NAME=human
@@ -42,7 +47,6 @@ BAMTOOLS=/home/cmb433/exome_macaque/bin/bamtools/bin
 GATK=/home/cmb433/exome_macaque/bin/GATK
 BCFTOOLS=/home/cmb433/exome_macaque/bin/samtools/bcftools
 VCFTOOLS=/home/cmb433/exome_macaque/bin/vcftools_0.1.9/bin
-PSMC=/home/cmb433/exome_macaque/bin/psmc
 TABIX=/home/cmb433/exome_macaque/bin/tabix-0.2.6
 
 # -------------------------------------------------------------------------------------- #
