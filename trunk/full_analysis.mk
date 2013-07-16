@@ -13,6 +13,8 @@ _BWA_INDEX_ENDINGS = .amb .ann .bwt .pac .sa
 _PROTO_BWA_INDEX = $(addprefix ${GENOME_FA}, ${BWA_INDEX_ENDINGS})
 _BWA_INDEX = $(subst .fa,,${PROTO_BWA_INDEX})
 
+IND_ID_W_PE_SE = ${IND_ID}.${READ_TYPE}
+
 # Steps. Can be called one-by-one with something like, make index_genome
 # --- preliminary_steps
 index_genome : ${GENOME_FA}i ${_BWA_INDEX}
@@ -26,17 +28,13 @@ endif
 ifeq ($(READ_TYPE),SE)
     align : results/${IND_ID}.readSE.bwa.${GENOME_NAME}.sai
     sampe_or_samse : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam
-    sam2bam : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam
-    sort_and_index_bam : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
 else ifeq ($(READ_TYPE),PE)
     align : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai
     sampe_or_samse : results/${IND_ID}.bwa.${GENOME_NAME}.sam
-    sam2bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam
-    sort_and_index_bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
 endif
-
-merge_bam : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
-get_alignment_stats : reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt
+sam2bam : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.sam.bam
+sort_and_index_bam : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
+get_alignment_stats : reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.txt
 # --- post_alignment_filtering_steps
 fix_mate_pairs : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.txt
 filter_unmapped : results/${IND_ID}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt
@@ -54,7 +52,7 @@ get_snp_stats : reports/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf.stats.
 # Group steps together
 preliminary_steps : index_genome
 pre_aln_analysis_steps : fastqc
-alignment_steps : align sampe_or_samse sam2bam sort_and_index_bam merge_bam get_alignment_stats
+alignment_steps : align sampe_or_samse sam2bam sort_and_index_bam get_alignment_stats
 post_alignment_filtering_steps : fix_mate_pairs filter_unmapped remove_dups add_read_groups filter_bad_qual
 snp_calling_steps : local_realign_targets local_realign call_snps filter_snps get_snp_stats #call_consensus
 # ---
@@ -190,23 +188,13 @@ results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_I
 	./scripts/index_bam.sh results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam;
 
 # -------------------------------------------------------------------------------------- #
-# --- Merge PE and SE BAMs
-# -------------------------------------------------------------------------------------- #
-
-# Merged BAM file [index] depends on input PE and input SE BAMs, SAMtools, and scripts/merge_bam.sh
-results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai ${SAMTOOLS}/* #scripts/merge_bam.sh
-	@echo "# === Merging SE and PE BAM files ============================================= #";
-	./scripts/merge_bam.sh ${GENOME_NAME}
-	./scripts/index_bam.sh results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam;
-
-# -------------------------------------------------------------------------------------- #
 # --- Analyze alignment output with flagstat, idxstats, and stats
 # -------------------------------------------------------------------------------------- #
 
 # Align stats report depends on the sorted BAM and scripts/get_alignment_stats.sh
-reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt : results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai #scripts/get_alignment_stats.sh
+reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.txt : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai #scripts/get_alignment_stats.sh
 	@echo "# === Analyzing alignment output ============================================== #";
-	./scripts/get_alignment_stats.sh results/${IND_ID}_MERGED.bwa.${GENOME_NAME}.sam.bam.sorted.bam reports/${IND_ID}_MERGED.bwa.${GENOME_NAME}.aln_stats.txt	
+	./scripts/get_alignment_stats.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.sam.bam.sorted.bam reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.txt	
 
 # ====================================================================================== #
 # -------------------------------------------------------------------------------------- #
