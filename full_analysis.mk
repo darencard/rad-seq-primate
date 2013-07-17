@@ -42,11 +42,11 @@ filter_unmapped : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.ba
 add_read_groups : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam
 filter_bad_qual : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam.bai reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.passed.txt
 # --- snp_calling_steps
-local_realign_targets : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list
-local_realign : results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.passed.realn.txt
-call_snps : results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.raw.bcf
-filter_snps : results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf
-get_snp_stats : reports/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf.stats.txt
+local_realign_targets : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam.list
+local_realign : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.passed.realn.txt
+call_snps : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.raw.bcf
+filter_snps : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.flt.vcf
+get_snp_stats : reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.flt.vcf.stats.txt
 #call_consensus : results/${IND_ID}.bwa.${GENOME_NAME}.consensus.fq.gz
 
 # Group steps together
@@ -266,7 +266,7 @@ reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.passed.txt : results/${IN
 # -------------------------------------------------------------------------------------- #
 
 # List of intervals to realign depends on BAM of reads that passed filtering, GATK, and scripts/local_realign_get_targets.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai ${GATK}/* #scripts/local_realign.sh
+results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam.list : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam.bai ${GATK}/* #scripts/local_realign.sh
 	@echo "# === Identifying intervals in need or local realignment ====================== #";
 	./scripts/local_realign_get_targets.sh ${GENOME_NAME} ${GENOME_FA};
 
@@ -275,50 +275,50 @@ results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list : results/${IND_ID}.bwa.${G
 # -------------------------------------------------------------------------------------- #
 
 # Realigned BAM depends on list of realign targets, BAM of reads that passed filtering, GATK, and scripts/local_realign.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam : results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.list results/${IND_ID}.bwa.${GENOME_NAME}.passed.bam.bai ${GATK}/* #scripts/local_realign.sh
+results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam.list results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam.bai ${GATK}/* #scripts/local_realign.sh
 	@echo "# === Doing local realignment ================================================= #";
 	./scripts/local_realign.sh ${GENOME_NAME} ${GENOME_FA};
 
 # Align stats report depends on realigned BAM and scripts/get_alignment_stats.sh
-reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.passed.realn.txt : results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam #scripts/get_alignment_stats.sh
+reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.passed.realn.txt : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam #scripts/get_alignment_stats.sh
 	@echo "# === Analyzing alignment output (locally realigned) ========================== #";
-	./scripts/get_alignment_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam reports/${IND_ID}.bwa.${GENOME_NAME}.aln_stats.passed.realn.txt;
+	./scripts/get_alignment_stats.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.passed.realn.txt;
 
 # -------------------------------------------------------------------------------------- #
 # --- Call SNPs
 # -------------------------------------------------------------------------------------- #
 
 # Raw SNPs file depends on realigned BAM, VCFtools, BCFtools, and scripts/call_snps.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.raw.bcf : results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam ${VCFTOOLS}/* ${BCFTOOLS}/* #scripts/call_snps.sh
+results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.raw.bcf : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam ${VCFTOOLS}/* ${BCFTOOLS}/* #scripts/call_snps.sh
 	@echo "# === Calling raw SNPs relative to genome ===================================== #";
-	./scripts/call_snps.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam ${GENOME_FA};
+	./scripts/call_snps.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam ${GENOME_FA};
 	
 # -------------------------------------------------------------------------------------- #
 # --- Filter SNPs for quality
 # -------------------------------------------------------------------------------------- #
 
 # Filtered SNP file depends on raw SNP file, BCFtools, and scripts/filter_snps.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf : results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.raw.bcf ${BCFTOOLS}/* #scripts/filter_snps.sh
+results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.flt.vcf : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.raw.bcf ${BCFTOOLS}/* #scripts/filter_snps.sh
 	@echo "# === Filtering raw SNPs ====================================================== #";
-	./scripts/filter_snps.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.raw.bcf;
+	./scripts/filter_snps.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.raw.bcf;
 
 # -------------------------------------------------------------------------------------- #
 # --- Get basic stats on SNPs
 # -------------------------------------------------------------------------------------- #
 
 # File of SNP stats depends on VCF file, VCFtools, and scripts/get_snp_stats.sh
-reports/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf.stats.txt : results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf ${VCFTOOLS}/* #scripts/get_snp_stats.sh
+reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.flt.vcf.stats.txt : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.flt.vcf ${VCFTOOLS}/* #scripts/get_snp_stats.sh
 	@echo "# === Getting basic SNPs stats ================================================ #";
-	./scripts/get_snp_stats.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.flt.vcf;
+	./scripts/get_snp_stats.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.flt.vcf;
 
 # -------------------------------------------------------------------------------------- #
 # --- Call consensus sequence
 # -------------------------------------------------------------------------------------- #
 
 # Consensus sequence depends on realigned BAM, SAMtools, BCFtools, and scripts/call_consensus.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.consensus.fq.gz : results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam ${SAMTOOLS}/* ${BCFTOOLS}/* #scripts/call_consensus.sh
+results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.consensus.fq.gz : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam ${SAMTOOLS}/* ${BCFTOOLS}/* #scripts/call_consensus.sh
 	@echo "# === Calling consensus sequence ============================================== #";
-	./scripts/call_consensus.sh results/${IND_ID}.bwa.${GENOME_NAME}.passed.realn.bam ${GENOME_FA} ${GENOME_NAME};
+	./scripts/call_consensus.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam ${GENOME_FA} ${GENOME_NAME};
 
 # ====================================================================================== #
 # -------------------------------------------------------------------------------------- #

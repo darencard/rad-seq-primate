@@ -20,18 +20,18 @@ mkdir -p $TMP_DIR
 
 java -Xmx4g -Djava.io.tmpdir=${TMP_DIR} \
 	-jar ${GATK}/GenomeAnalysisTK.jar \
-	-I results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam \
+	-I results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.passed.bam \
 	-R ${GENOME_FA} \
 	--filter_mismatching_base_and_quals \
 	-T IndelRealigner \
-	-targetIntervals results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam.list \
-	-o results/${IND_ID}.bwa.${GENOME_CODE}.passed.realn.bam
+	-targetIntervals results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.passed.bam.list \
+	-o results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.passed.realn.bam
 
 # Delete temp folder
 rm -r $TMP_DIR
 
 # Copy index file, since we expect it later with a slightly different name
-cp results/${IND_ID}.bwa.${GENOME_CODE}.passed.realn.bai results/${IND_ID}.bwa.${GENOME_CODE}.passed.realn.bam.bai
+cp results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.passed.realn.bai results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.passed.realn.bam.bai
 
 exit;
 
