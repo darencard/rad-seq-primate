@@ -15,7 +15,7 @@ GENOME_CODE=$1
 
 ${BAMTOOLS}/bamtools filter \
 	-mapQuality ">=20" \
-	-in results/${IND_ID}.bwa.${GENOME_CODE}.fixed.filtered.RG.bam \
-	-out results/${IND_ID}.bwa.${GENOME_CODE}.passed.bam
+	-in results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.RG.bam \
+	-out results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.passed.bam
 
 exit;
