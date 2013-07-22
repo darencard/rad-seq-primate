@@ -93,7 +93,7 @@ ${GENOME_FA}i : ${GENOME_FA} #${BWA}/* ${SAMTOOLS}/* #scripts/index_genome.sh
 # See for details:
 # http://www.cmcrossroads.com/ask-mr-make/12908-rules-with-multiple-outputs-in-gnu-make
 ${_BWA_INDEX} : ${GENOME_FA}i
-	
+
 # ====================================================================================== #
 # -------------------------------------------------------------------------------------- #
 # --- Analyze reads
@@ -162,7 +162,7 @@ results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam : results/${IND_ID}.readSE.bwa.${GEN
 # -------------------------------------------------------------------------------------- #
 
 # BAM file depends on SAM file, samtools, genome .fai index, and scripts/sam2bam.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam ${SAMTOOLS}/* ${GENOME_FA}i #scripts/sam2bam.sh
+results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam ${SAMTOOLS}/* ${GENOME_FA}i #scripts/sam2bam.sh
 	@echo "# === Converting SAM file to BAM file ========================================= #";
 	./scripts/sam2bam.sh ${GENOME_FA}i results/${IND_ID}.bwa.${GENOME_NAME}.sam;
 
@@ -176,10 +176,10 @@ results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.SE.bwa.${GEN
 # -------------------------------------------------------------------------------------- #
 
 # Sorted BAM file index depends on unsorted BAM file, scripts/sort_bam, and scripts/index_bam.sh
-results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam #scripts/sort_bam scripts/index_bam.sh
+results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam.bam #scripts/sort_bam scripts/index_bam.sh
 	@echo "# === Sorting and Indexing PE BAM file ======================================== #";
-	./scripts/sort_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam;
-	./scripts/index_bam.sh results/${IND_ID}.bwa.${GENOME_NAME}.sam.bam.sorted.bam;
+	./scripts/sort_bam.sh results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam.bam;
+	./scripts/index_bam.sh results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam.bam.sorted.bam;
 
 # Sorted BAM file index depends on unsorted BAM file, scripts/sort_bam, and scripts/index_bam.sh
 results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam #scripts/sort_bam scripts/index_bam.sh
@@ -292,7 +292,7 @@ reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.passed.realn.txt : result
 results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.raw.bcf : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam ${VCFTOOLS}/* ${BCFTOOLS}/* #scripts/call_snps.sh
 	@echo "# === Calling raw SNPs relative to genome ===================================== #";
 	./scripts/call_snps.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.bam ${GENOME_FA};
-	
+
 # -------------------------------------------------------------------------------------- #
 # --- Filter SNPs for quality
 # -------------------------------------------------------------------------------------- #
