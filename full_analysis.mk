@@ -38,7 +38,7 @@ get_alignment_stats : reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.txt
 # --- post_alignment_filtering_steps
 fix_mate_pairs : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.bam reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.txt
 filter_unmapped : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt
-#remove_dups : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt
+remove_dups : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam.bai reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.nodup.txt
 add_read_groups : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam
 filter_bad_qual : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam.bai reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.passed.txt
 # --- snp_calling_steps
@@ -232,11 +232,26 @@ reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt : result
 	./scripts/get_alignment_stats.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.bam reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt;
 
 # -------------------------------------------------------------------------------------- #
+# --- Remove duplicates
+# -------------------------------------------------------------------------------------- #
+
+# BAM sans dups [index file] depends on output BAM from filtering, Picard, and scripts/remove_dups.sh
+results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam.bai : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai ${PICARD}/* # scripts/remove_dups.sh
+	@echo "# === Removing duplicate reads mapped ========================= #";
+	./scripts/remove_dups.sh ${GENOME_NAME};
+	./scripts/index_bam.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam;
+
+# Align stats report depends on BAM sans dups and scripts/get_alignment_stats.sh
+reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.nodup.txt : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam #scripts/get_alignment_stats.sh
+	@echo "# === Analyzing alignment output (duplicates removed) ======== #";
+	./scripts/get_alignment_stats.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.nodup.txt;
+
+# -------------------------------------------------------------------------------------- #
 # --- Add read groups
 # -------------------------------------------------------------------------------------- #
 
 # BAM without RGs depends on output BAM, Picard, and scripts/add_read_groups.sh
-results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai ${PICARD}/* # scripts/add_read_groups.sh
+results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.nodup.bam.bai ${PICARD}/* # scripts/add_read_groups.sh
 	@echo "# === Adding read groups ====================================================== #";
 	./scripts/add_read_groups.sh ${GENOME_NAME};
 

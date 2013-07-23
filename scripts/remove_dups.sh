@@ -21,16 +21,16 @@ mkdir -p $TMP_DIR
 
 echo "CMD: java -Djava.io.tmpdir=${TMP_DIR} \
 	-jar ${PICARD}/MarkDuplicates.jar \
-	INPUT=results/${IND_ID}.bwa.${GENOME_CODE}.fixed.filtered.bam \
-	OUTPUT=results/${IND_ID}.bwa.${GENOME_CODE}.fixed.filtered.nodup.bam \
+	INPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.bam \
+	OUTPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.nodup.bam \
 	M=reports/duplicate_report.txt \
 	VALIDATION_STRINGENCY=SILENT \
 	REMOVE_DUPLICATES=true";
 
 java -Djava.io.tmpdir=${TMP_DIR} \
 	-jar ${PICARD}/MarkDuplicates.jar \
-	INPUT=results/${IND_ID}.bwa.${GENOME_CODE}.fixed.filtered.bam \
-	OUTPUT=results/${IND_ID}.bwa.${GENOME_CODE}.fixed.filtered.nodup.bam \
+	INPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.bam \
+	OUTPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.nodup.bam \
 	M=reports/duplicate_report.txt \
 	VALIDATION_STRINGENCY=SILENT \
 	REMOVE_DUPLICATES=true
