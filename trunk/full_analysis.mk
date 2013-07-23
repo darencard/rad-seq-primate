@@ -30,7 +30,7 @@ ifeq ($(READ_TYPE),SE)
     sampe_or_samse : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam
 else ifeq ($(READ_TYPE),PE)
     align : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai
-    sampe_or_samse : results/${IND_ID}.bwa.${GENOME_NAME}.sam
+    sampe_or_samse : results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam
 endif
 sam2bam : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.sam.bam
 sort_and_index_bam : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.sam.bam.sorted.bam.bai
@@ -148,7 +148,7 @@ results/${IND_ID}.readSE.bwa.${GENOME_NAME}.sai : ${BWA}/* ${READ_SE} ${GENOME_F
 
 # sampe output (*.sam) depends on *.sai files and sampe.sh
 # Using the first read as a stand in for the both
-results/${IND_ID}.bwa.${GENOME_NAME}.sam : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai #scripts/sampe.sh
+results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam : results/${IND_ID}.read1.bwa.${GENOME_NAME}.sai #scripts/sampe.sh
 	@echo "# === Making SAM file from PE reads =========================================== #";
 	./scripts/sampe.sh ${GENOME_FA} ${GENOME_NAME};
 
@@ -162,9 +162,9 @@ results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam : results/${IND_ID}.readSE.bwa.${GEN
 # -------------------------------------------------------------------------------------- #
 
 # BAM file depends on SAM file, samtools, genome .fai index, and scripts/sam2bam.sh
-results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.bwa.${GENOME_NAME}.sam ${SAMTOOLS}/* ${GENOME_FA}i #scripts/sam2bam.sh
+results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam ${SAMTOOLS}/* ${GENOME_FA}i #scripts/sam2bam.sh
 	@echo "# === Converting SAM file to BAM file ========================================= #";
-	./scripts/sam2bam.sh ${GENOME_FA}i results/${IND_ID}.bwa.${GENOME_NAME}.sam;
+	./scripts/sam2bam.sh ${GENOME_FA}i results/${IND_ID}.PE.bwa.${GENOME_NAME}.sam;
 
 # Do same for SE
 results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam.bam : results/${IND_ID}.SE.bwa.${GENOME_NAME}.sam ${SAMTOOLS}/* ${GENOME_FA}i #scripts/sam2bam.sh
