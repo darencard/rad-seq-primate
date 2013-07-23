@@ -21,8 +21,8 @@ $BWA/bwa sampe -A \
 	results/${IND_ID}.read1.bwa.${GENOME_CODE}.sai \
 	results/${IND_ID}.read2.bwa.${GENOME_CODE}.sai \
 	$READ1 \
-	$READ2 > results/${IND_ID}.bwa.${GENOME_CODE}.sam
+	$READ2 > results/${IND_ID}.PE.bwa.${GENOME_CODE}.sam
 
-echo results/${IND_ID}.bwa.${GENOME_CODE}.sam
+echo results/${IND_ID}.PE.bwa.${GENOME_CODE}.sam
 
 exit;
