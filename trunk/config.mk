@@ -53,6 +53,10 @@ TABIX=/home/cmb433/exome_macaque/bin/tabix-0.2.6
 # --- Parameters for external programs
 # -------------------------------------------------------------------------------------- #
 
+# BWA parameters
 BWA_ALN_PARAM=-t 8
+# SAMtools mpileup parameters
 SNP_MIN_COV=3
 SNP_MAX_COV=100
+# BAMtools filter parameters
+MAPQUAL=20

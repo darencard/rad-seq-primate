@@ -4,17 +4,18 @@
 # --- Filter mapped reads for quality
 # ------------------------------------------------------------------------------
 
-# Check that genome code was passed as parameter
-USAGE="$0 genome_code";
-if [ -z "$1" ]; then
+# Check that genome code and mapping quality were passed as parameter
+USAGE="$0 genome_code map_quality";
+if [ -z "$2" ]; then
 	echo "ERROR: $USAGE";
 	exit 1;
 fi
 
 GENOME_CODE=$1
+MAPQUAL=$2
 
 ${BAMTOOLS}/bamtools filter \
-	-mapQuality ">=20" \
+	-mapQuality ">=${MAPQUAL}" \
 	-in results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.RG.bam \
 	-out results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.passed.bam
 
