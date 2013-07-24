@@ -16,7 +16,7 @@ GENOME_CODE=$1
 # Add read groups with Picard:
 
 java -jar ${PICARD}/AddOrReplaceReadGroups.jar \
-	INPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.nodup.bam \
+	INPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.postdup.bam \
 	OUTPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.RG.bam \
 	RGLB=${IND_ID_W_PE_SE} \
 	RGPL=Illumina \

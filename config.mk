@@ -60,3 +60,5 @@ SNP_MIN_COV=3
 SNP_MAX_COV=100
 # BAMtools filter parameters
 MAPQUAL=20
+# Should we mark duplicates? TRUE or FALSE
+MARK_DUPS=TRUE
