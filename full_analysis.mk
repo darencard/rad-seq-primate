@@ -262,7 +262,7 @@ results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam : results/${I
 # Filtered BAM depends on output BAM from add_read_groups.sh, BAMtools, and scripts/filter_mapped_reads_quality.sh
 results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam.bai : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.RG.bam ${BEDTOOLS}/* # scripts/filter_mapped_reads_quality.sh
 	@echo "# === Filtering low quality reads mapped to genome ============================ #";
-	./scripts/filter_mapped_reads_quality.sh ${GENOME_NAME};
+	./scripts/filter_mapped_reads_quality.sh ${GENOME_NAME} ${MAPQUAL};
 	./scripts/index_bam.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.bam;
 
 # Align stats report depends on quality-filtered BAM and scripts/get_alignment_stats.sh
@@ -367,7 +367,6 @@ results/merged.flt.vcf.stats.txt : results/merged.flt.vcf ${VCFTOOLS}/* #scripts
 reports/RAD_coverage.txt : results/*.bwa.${GENOME_NAME}.passed.realn.bam 
 	@echo "# === Counting RAD tags with reads ============================================ #";
 	./scripts/count_restr_enz_reads.sh;
-
 
 
 
