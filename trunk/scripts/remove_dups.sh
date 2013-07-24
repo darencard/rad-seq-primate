@@ -13,29 +13,45 @@ fi
 
 GENOME_CODE=$1
 
-# Make temp folder
-TMP_DIR=tmp/$RANDOM
-mkdir -p $TMP_DIR
+# Remove duplicates with Picard, if user instructs
 
-# Then remove duplicates with Picard:
+if [ "$MARK_DUPS" = "TRUE" ]; then
 
-echo "CMD: java -Djava.io.tmpdir=${TMP_DIR} \
-	-jar ${PICARD}/MarkDuplicates.jar \
-	INPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.bam \
-	OUTPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.nodup.bam \
-	M=reports/duplicate_report.txt \
-	VALIDATION_STRINGENCY=SILENT \
-	REMOVE_DUPLICATES=true";
+	# Make temp folder
+	TMP_DIR=tmp/$RANDOM
+	mkdir -p $TMP_DIR
 
-java -Djava.io.tmpdir=${TMP_DIR} \
-	-jar ${PICARD}/MarkDuplicates.jar \
-	INPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.bam \
-	OUTPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.nodup.bam \
-	M=reports/duplicate_report.txt \
-	VALIDATION_STRINGENCY=SILENT \
-	REMOVE_DUPLICATES=true
+	echo "CMD: java -Djava.io.tmpdir=${TMP_DIR} \
+		-jar ${PICARD}/MarkDuplicates.jar \
+		INPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.bam \
+		OUTPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.postdup.bam \
+		M=reports/duplicate_report.txt \
+		VALIDATION_STRINGENCY=SILENT \
+		REMOVE_DUPLICATES=false";
 
-# Delete temp folder
-rm -r $TMP_DIR
+	java -Djava.io.tmpdir=${TMP_DIR} \
+		-jar ${PICARD}/MarkDuplicates.jar \
+		INPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.bam \
+		OUTPUT=results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.postdup.bam \
+		M=reports/duplicate_report.txt \
+		VALIDATION_STRINGENCY=SILENT \
+		REMOVE_DUPLICATES=false
+
+	# Delete temp folder
+	rm -r $TMP_DIR
+
+elif [ "$MARK_DUPS" = "FALSE" ]; then
+
+	# Otherwise just copy input file to output
+	echo "Duplicates NOT being removed, as instructed by user."
+	cp results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.bam results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.postdup.bam
+	cp results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.bam.bai results/${IND_ID_W_PE_SE}.bwa.${GENOME_CODE}.fixed.filtered.postdup.bam.bai
+	
+else
+
+	echo "ERROR: MARK_DUPS must be equal to either TRUE or FALSE. Correct error in config.mk." 1>&2 ;
+	exit 1;
+	
+fi
 
 exit;
