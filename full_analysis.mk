@@ -237,13 +237,13 @@ reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.txt : result
 
 # BAM sans dups [index file] depends on output BAM from filtering, Picard, and scripts/remove_dups.sh
 results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.postdup.bam.bai : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.bam.bai ${PICARD}/* # scripts/remove_dups.sh
-	@echo "# === Removing duplicate reads mapped ========================= #";
+	@echo "# === Removing duplicate reads mapped ========================================= #";
 	./scripts/remove_dups.sh ${GENOME_NAME};
 	./scripts/index_bam.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.postdup.bam;
 
 # Align stats report depends on BAM sans dups and scripts/get_alignment_stats.sh
 reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.postdup.txt : results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.postdup.bam #scripts/get_alignment_stats.sh
-	@echo "# === Analyzing alignment output (duplicates removed) ======== #";
+	@echo "# === Analyzing alignment output (duplicates removed) ========================= #";
 	./scripts/get_alignment_stats.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.fixed.filtered.postdup.bam reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.aln_stats.pairsfix.flt.postdup.txt;
 
 # -------------------------------------------------------------------------------------- #
@@ -327,7 +327,7 @@ reports/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.flt.vcf.stats.txt : re
 	./scripts/get_snp_stats.sh results/${IND_ID_W_PE_SE}.bwa.${GENOME_NAME}.passed.realn.flt.vcf;
 
 # -------------------------------------------------------------------------------------- #
-# --- Call consensus sequence
+# --- Call consensus sequence - Currently turned off
 # -------------------------------------------------------------------------------------- #
 
 # Consensus sequence depends on realigned BAM, SAMtools, BCFtools, and scripts/call_consensus.sh
@@ -368,5 +368,58 @@ reports/RAD_coverage.txt : results/*.bwa.${GENOME_NAME}.passed.realn.bam
 	@echo "# === Counting RAD tags with reads ============================================ #";
 	./scripts/count_restr_enz_reads.sh;
 
+# ====================================================================================== #
+# -------------------------------------------------------------------------------------- #
+# --- Multi-sample SNP calling with GATK
+# -------------------------------------------------------------------------------------- #
+# ====================================================================================== #
 
+# -------------------------------------------------------------------------------------- #
+# --- Figure out how to partition GATK jobs (e.g. by chromosome)
+# -------------------------------------------------------------------------------------- #
 
+# Dummy text files depend on *.fai genome index
+	# Make dummy text files, one per line in *.fai genome index
+
+# -------------------------------------------------------------------------------------- #
+# --- Call UnifiedGenotyper
+# -------------------------------------------------------------------------------------- #
+
+# *.raw.snps.indels.vcf depends on *.dummy.file 
+	# UnifiedGenotyper as in call_gatk_genotyper.pbs
+
+# -------------------------------------------------------------------------------------- #
+# --- Filter variants for quality
+# -------------------------------------------------------------------------------------- #
+
+# chr${i}.flt.vcf depends on *.raw.snps.indels.vcf
+	# VariantFiltration
+
+# -------------------------------------------------------------------------------------- #
+# --- Keep only SNPs that pass our controls
+# -------------------------------------------------------------------------------------- #
+
+# chr${i}.pass.snp.vcf depends on
+	# SelectVariants
+	# touch some marker file (SV_done_marker)
+
+# -------------------------------------------------------------------------------------- #
+# --- Merge SNP files together
+# -------------------------------------------------------------------------------------- #
+
+# big merged VCF depends on SV_done_marker
+	# Merge (chromosomal) VCF files
+
+# -------------------------------------------------------------------------------------- #
+# --- Convert to plink's PED format
+# -------------------------------------------------------------------------------------- #
+
+# PED file depends on merged VCF
+	# Convert to PED
+
+# -------------------------------------------------------------------------------------- #
+# --- Make binary PED file
+# -------------------------------------------------------------------------------------- #
+
+# Binary PED depends on PED file
+	# Convert to binary PED
