@@ -62,3 +62,8 @@ SNP_MAX_COV=100
 MAPQUAL=20
 # Should we mark duplicates? TRUE or FALSE
 MARK_DUPS=TRUE
+
+# -------------------------------------------------------------------------------------- #
+# --- Parameters for multi-sample SNP calling
+# -------------------------------------------------------------------------------------- #
+
