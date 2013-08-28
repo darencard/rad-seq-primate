@@ -8,5 +8,6 @@ ALL_BAM=$(ls results/*.passed.realn.bam)
 
 ${BEDTOOLS}/multiBamCov \
 	-bams	${ALL_BAM} \
-	-bed ${RAD_TAG_BED} \
-	> reports/RAD_coverage.txt
+	-bed reports/${GENOME_CODE}_${ENZYME}_RADtags.bed \
+	> reports/${GENOME_CODE}_${ENZYME}_RAD_coverage.txt
+

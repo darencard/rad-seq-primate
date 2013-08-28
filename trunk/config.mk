@@ -26,11 +26,21 @@ READ_TYPE=PE
 # Must be in FASTA format
 GENOME_FA=genomes/hg19/hg19.fa
 
+# Figure out genome code from path to genome FASTA
+GENOME_CODE=$(notdir $(basename $(GENOME_FA)))
+
 # Common name of genome (used to name files)
 GENOME_NAME=human
 
-# BED file of RAD tag locations. This can be generated with the UCSC utility oligoMatch
-RAD_TAG_BED=./data/PspXI_hg19.bed
+# A BED file of RAD tag locations is generated automatically with rdbio's restriction 
+# finder BioPython script. The path to the script must be specified in RE_FINDER below.
+# It can be downloaded from:
+# https://github.com/daler/rdbio-scripts/blob/master/sequenceFiles/restriction-finder.py
+
+# The BED of RAD tags will be located at reports/${GENOME_CODE}_${ENZYME}_sites.bed
+# So for example, reports/hg19_PspXI_sites.bed
+ENZYME=PspXI
+RE_FINDER=/home/cmb433/exome_macaque/bin/restriction-finder_rdbio.py
 
 # -------------------------------------------------------------------------------------- #
 # --- Paths to external programs
